@@ -2,7 +2,22 @@
   "permissions": {
     "allow": [
       "WebFetch(domain:www.thefmspower.com)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "WebSearch",
+      "Bash(curl:*)",
+      "WebFetch(domain:www.youtube.com)",
+      "Bash(identify:*)",
+      "Bash(file:*)",
+      "Bash(ls:*)",
+      "Bash(for file in about.html contact.html product-detail.html products.html)",
+      "Bash(do sed -i 's|<img src=\"\"images/logo/fmslogo.png\"\" alt=\"\"FM''''s Power Logo\"\" class=\"\"logo-image\"\"><!--div class=\"\"logo-icon\"\">.*</div>|\\\\n        <img src=\"\"images/logo/fmslogo.png\"\" alt=\"\"FM''''s Power Logo\"\" class=\"\"logo-image\"\">|g' \"$file\")",
+      "Bash(done)",
+      "Bash(for file in contact.html product-detail.html products.html)",
+      "Bash(do sed -i 's|<a href=\"\"index.html\"\" class=\"\"logo\"\">.*<img src=\"\"images/logo/fmslogo.png\"\".*<span>FM''''s Power</span>.*</a>|<a href=\"\"index.html\"\" class=\"\"logo\"\">\\\\n            <img src=\"\"images/logo/fmslogo.png\"\" alt=\"\"FM''''s Power Logo\"\" class=\"\"logo-image\"\">\\\\n          </a>|g' \"$file\")",
+      "Bash(for file in contact.html product-detail.html)",
+      "Bash(do sed -i 's|\\\\.logo-icon svg { width: 24px; height: 24px; }|.logo-icon svg { width: 24px; height: 24px; }\\\\n\\\\n    .logo-image {\\\\n      height: 50px;\\\\n      width: auto;\\\\n      object-fit: contain;\\\\n    }|g' \"$file\")",
+      "Bash(grep:*)",
+      "Bash(for i in 1 2 3 4 5)"
     ]
   }
 }

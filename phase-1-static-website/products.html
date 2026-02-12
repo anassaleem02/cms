@@ -311,6 +311,12 @@
       height: 24px;
     }
 
+    .logo-image {
+      height: 50px;
+      width: auto;
+      object-fit: contain;
+    }
+
     .logo span {
       background: var(--gradient-primary);
       -webkit-background-clip: text;
@@ -565,11 +571,14 @@
     }
 
     /* Responsive */
+    @media (max-width: 1200px) {
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
     @media (max-width: 1023px) {
       .nav-links, .nav-cta { display: none; }
       .menu-toggle { display: flex; }
       .mobile-nav { display: flex; }
-      .products-grid { grid-template-columns: repeat(2, 1fr); }
       .footer-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
@@ -593,7 +602,7 @@
   <header class="header" id="header">
     <div class="container">
       <a href="index.html" class="logo">
-        <div class="logo-icon">
+        <img src="images/logo/fmslogo.png" alt="FM's Power Logo" class="logo-image"><!--div class="logo-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
           </svg>
@@ -671,7 +680,7 @@
             <div class="product-image">
               <span class="product-badge">Featured</span>
               <span class="product-category-badge">Inverter</span>
-              <img src="images/products/inverter-1.6kw.png" alt="S.O Series 1.6 KW Inverter">
+              <img src="images/products/fms1.6.jpeg" alt="S.O Series 1.6 KW Inverter">
             </div>
             <div class="product-content">
               <h3 class="product-title">S.O Series 1.6 KW</h3>
@@ -707,7 +716,7 @@
             <div class="product-image">
               <span class="product-badge">Popular</span>
               <span class="product-category-badge">Inverter</span>
-              <img src="images/products/inverter-4kw.png" alt="S.O Series 4 KW Inverter">
+              <img src="images/products/fms4.jpeg" alt="S.O Series 4 KW Inverter">
             </div>
             <div class="product-content">
               <h3 class="product-title">S.O Series 4 KW</h3>
@@ -743,7 +752,7 @@
             <div class="product-image">
               <span class="product-badge">Best Seller</span>
               <span class="product-category-badge">Inverter</span>
-              <img src="images/products/inverter-6.2kw.png" alt="S.O Series 6.2 KW Inverter">
+              <img src="images/products/fms4.jpeg" alt="S.O Series 6.2 KW Inverter">
             </div>
             <div class="product-content">
               <h3 class="product-title">S.O Series 6.2 KW</h3>
@@ -778,7 +787,7 @@
           <article class="product-card reveal" data-category="batteries" data-delay="300">
             <div class="product-image">
               <span class="product-category-badge">Battery</span>
-              <img src="images/products/battery-105ah.png" alt="S.O Lithium Battery 51.2V 105Ah">
+              <img src="images/products/lithium-battery-105ah.jpeg" alt="S.O Lithium Battery 51.2V 105Ah">
             </div>
             <div class="product-content">
               <h3 class="product-title">S.O Lithium 51.2V 105Ah</h3>
@@ -814,7 +823,7 @@
             <div class="product-image">
               <span class="product-badge">High Capacity</span>
               <span class="product-category-badge">Battery</span>
-              <img src="images/products/battery-280ah.png" alt="S.O Lithium Battery 51.2V 280Ah">
+              <img src="images/products/lithium-280ah.jpeg" alt="S.O Lithium Battery 51.2V 280Ah">
             </div>
             <div class="product-content">
               <h3 class="product-title">S.O Lithium 51.2V 280Ah</h3>
@@ -891,7 +900,7 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="index.html" class="logo">
-            <div class="logo-icon">
+            <img src="images/logo/fmslogo.png" alt="FM's Power Logo" class="logo-image"><!--div class="logo-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
             </div>
             <span>FM's Power</span>

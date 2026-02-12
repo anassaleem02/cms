@@ -7,29 +7,29 @@
      COLOR PALETTE
      ========================================== */
 
-  /* Primary - Solar Emerald */
-  --color-primary-50: #ECFDF5;
-  --color-primary-100: #D1FAE5;
-  --color-primary-200: #A7F3D0;
-  --color-primary-300: #6EE7B7;
-  --color-primary-400: #34D399;
-  --color-primary-500: #10B981;
-  --color-primary-600: #059669;
-  --color-primary-700: #047857;
-  --color-primary-800: #065F46;
-  --color-primary-900: #064E3B;
+  /* Primary - Solar Blue (FM's Power Brand) */
+  --color-primary-50: #E6F4FF;
+  --color-primary-100: #BAE0FF;
+  --color-primary-200: #91CAFF;
+  --color-primary-300: #69B1FF;
+  --color-primary-400: #4096FF;
+  --color-primary-500: #1677FF;
+  --color-primary-600: #0958D9;
+  --color-primary-700: #003EB3;
+  --color-primary-800: #002C8C;
+  --color-primary-900: #001D66;
 
-  /* Accent - Solar Gold */
-  --color-accent-50: #FFFBEB;
-  --color-accent-100: #FEF3C7;
-  --color-accent-200: #FDE68A;
-  --color-accent-300: #FCD34D;
-  --color-accent-400: #FBBF24;
-  --color-accent-500: #F59E0B;
-  --color-accent-600: #D97706;
-  --color-accent-700: #B45309;
-  --color-accent-800: #92400E;
-  --color-accent-900: #78350F;
+  /* Accent - Cyan Blue (Secondary Brand Color) */
+  --color-accent-50: #E6FCFF;
+  --color-accent-100: #B5F5FF;
+  --color-accent-200: #87E8FF;
+  --color-accent-300: #5CD8FF;
+  --color-accent-400: #4AB5D8;
+  --color-accent-500: #36A3BF;
+  --color-accent-600: #2E8BA3;
+  --color-accent-700: #1E6B7A;
+  --color-accent-800: #155566;
+  --color-accent-900: #0D3F4D;
 
   /* Neutral - Carbon */
   --color-neutral-50: #FAFAFA;
@@ -69,26 +69,31 @@
   /* Border Colors */
   --border-primary: #27272A;
   --border-secondary: #3F3F46;
-  --border-focus: #10B981;
+  --border-focus: #1677FF;
 
   /* ==========================================
      GRADIENTS
      ========================================== */
 
-  --gradient-primary: linear-gradient(135deg, #10B981 0%, #059669 50%, #047857 100%);
-  --gradient-primary-hover: linear-gradient(135deg, #34D399 0%, #10B981 50%, #059669 100%);
-  --gradient-gold: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  --gradient-primary: linear-gradient(135deg, #1677FF 0%, #0958D9 50%, #003EB3 100%);
+  --gradient-primary-hover: linear-gradient(135deg, #4096FF 0%, #1677FF 50%, #0958D9 100%);
+  --gradient-gold: linear-gradient(135deg, #FAAD14 0%, #D98A0B 100%);
+  --gradient-cyan: linear-gradient(135deg, #4AB5D8 0%, #36A3BF 100%);
   --gradient-dark: linear-gradient(180deg, #0A0A0B 0%, #111113 50%, #1A1A1D 100%);
   --gradient-radial: radial-gradient(ellipse at center, #1A1A1D 0%, #0A0A0B 100%);
   --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
   --gradient-mesh:
-    radial-gradient(at 40% 20%, rgba(16, 185, 129, 0.15) 0px, transparent 50%),
-    radial-gradient(at 80% 0%, rgba(245, 158, 11, 0.1) 0px, transparent 50%),
-    radial-gradient(at 0% 50%, rgba(16, 185, 129, 0.1) 0px, transparent 50%),
-    radial-gradient(at 100% 50%, rgba(245, 158, 11, 0.08) 0px, transparent 50%);
+    radial-gradient(at 40% 20%, rgba(22, 119, 255, 0.15) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, rgba(74, 181, 216, 0.12) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, rgba(22, 119, 255, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 50%, rgba(74, 181, 216, 0.08) 0px, transparent 50%);
   --gradient-hero:
     linear-gradient(180deg, rgba(10, 10, 11, 0) 0%, rgba(10, 10, 11, 0.8) 100%),
     var(--gradient-mesh);
+
+  /* Additional Color Variables */
+  --color-gold: #FAAD14;
+  --color-green: #52C41A;
 
   /* ==========================================
      TYPOGRAPHY
@@ -196,14 +201,15 @@
   --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 
   /* Glow Shadows */
-  --shadow-glow-sm: 0 0 20px rgba(16, 185, 129, 0.2);
-  --shadow-glow-md: 0 0 30px rgba(16, 185, 129, 0.3);
-  --shadow-glow-lg: 0 0 40px rgba(16, 185, 129, 0.4);
-  --shadow-glow-gold: 0 0 30px rgba(245, 158, 11, 0.3);
+  --shadow-glow-sm: 0 0 20px rgba(22, 119, 255, 0.2);
+  --shadow-glow-md: 0 0 30px rgba(22, 119, 255, 0.3);
+  --shadow-glow-lg: 0 0 40px rgba(22, 119, 255, 0.4);
+  --shadow-glow-cyan: 0 0 30px rgba(74, 181, 216, 0.3);
+  --shadow-glow-gold: 0 0 30px rgba(250, 173, 20, 0.3);
 
   /* Card Shadows */
   --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
-  --shadow-card-hover: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 40px rgba(16, 185, 129, 0.1);
+  --shadow-card-hover: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 40px rgba(22, 119, 255, 0.15);
 
   /* ==========================================
      TRANSITIONS & ANIMATIONS

@@ -83,6 +83,12 @@
       height: 24px;
     }
 
+    .logo-image {
+      height: 50px;
+      width: auto;
+      object-fit: contain;
+    }
+
     .logo span {
       background: var(--gradient-primary);
       -webkit-background-clip: text;
@@ -251,13 +257,19 @@
       position: absolute;
       inset: 0;
       z-index: -1;
+      background: url('images/hero/solar_img.jpg') center/cover no-repeat;
+      background-attachment: fixed;
     }
 
     .hero-gradient {
       position: absolute;
       inset: 0;
-      background: var(--gradient-mesh);
-      opacity: 0.8;
+      background: linear-gradient(135deg,
+                  rgba(10, 10, 11, 0.88) 0%,
+                  rgba(17, 17, 19, 0.85) 40%,
+                  rgba(22, 119, 255, 0.25) 70%,
+                  rgba(74, 181, 216, 0.15) 100%);
+      opacity: 1;
     }
 
     .hero-orb {
@@ -314,6 +326,21 @@
       margin: 0 auto;
       position: relative;
       z-index: 1;
+    }
+
+    .hero-image {
+      max-width: 800px;
+      margin: var(--space-12) auto 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: auto;
+      border-radius: var(--radius-2xl);
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--glass-border);
     }
 
     .hero-badge {
@@ -721,6 +748,103 @@
     .testimonials-dots {
       display: flex;
       gap: var(--space-2);
+    }
+
+    /* ==========================================
+       VIDEO REVIEWS SECTION
+       ========================================== */
+    .video-reviews-section {
+      padding: var(--space-24) 0;
+      background: var(--gradient-dark);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .video-reviews-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--glass-border);
+    }
+
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: var(--space-6);
+      margin-top: var(--space-12);
+    }
+
+    .video-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      transition: all var(--transition-normal);
+      position: relative;
+    }
+
+    .video-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--color-primary-500);
+      box-shadow: 0 20px 40px rgba(22, 119, 255, 0.2);
+    }
+
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      background: var(--bg-secondary);
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-info {
+      padding: var(--space-5);
+    }
+
+    .video-info h3 {
+      font-size: var(--text-lg);
+      font-weight: var(--font-semibold);
+      color: var(--text-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .video-info p {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .video-badge {
+      position: absolute;
+      top: var(--space-3);
+      right: var(--space-3);
+      background: rgba(22, 119, 255, 0.9);
+      backdrop-filter: blur(10px);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      z-index: 1;
+    }
+
+    .video-badge svg {
+      width: 12px;
+      height: 12px;
     }
 
     /* ==========================================
@@ -1139,20 +1263,7 @@
   <header class="header" id="header">
     <div class="container">
       <a href="index.html" class="logo">
-        <div class="logo-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="5"/>
-            <line x1="12" y1="1" x2="12" y2="3"/>
-            <line x1="12" y1="21" x2="12" y2="23"/>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-            <line x1="1" y1="12" x2="3" y2="12"/>
-            <line x1="21" y1="12" x2="23" y2="12"/>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-          </svg>
-        </div>
-        <span>FM's Power</span>
+        <img src="images/logo/fmslogo.png" alt="FM's Power Logo" class="logo-image">
       </a>
 
       <nav class="nav">
@@ -1262,6 +1373,10 @@
               <div class="hero-stat-label">Power Generated</div>
             </div>
           </div>
+
+          <div class="hero-image reveal" data-delay="500">
+            <img src="images/hero/homepic.png" alt="FM's Power Solar Solutions" loading="eager">
+          </div>
         </div>
       </div>
 
@@ -1293,7 +1408,7 @@
             <div class="product-image">
               <span class="product-badge">Featured</span>
               <span class="product-category-badge">Inverter</span>
-              <img src="images/products/inverter-1.6kw.png" alt="S.O Series 1.6 KW Inverter" loading="lazy">
+              <img src="images/products/fms1.6.jpeg" alt="S.O Series 1.6 KW Inverter" loading="lazy">
             </div>
             <div class="product-content">
               <h3 class="product-title">S.O Series 1.6 KW</h3>
@@ -1329,7 +1444,7 @@
             <div class="product-image">
               <span class="product-badge">Popular</span>
               <span class="product-category-badge">Inverter</span>
-              <img src="images/products/inverter-4kw.png" alt="S.O Series 4 KW Inverter" loading="lazy">
+              <img src="images/products/fms4.jpeg" alt="S.O Series 4 KW Inverter" loading="lazy">
             </div>
             <div class="product-content">
               <h3 class="product-title">S.O Series 4 KW</h3>
@@ -1365,7 +1480,7 @@
             <div class="product-image">
               <span class="product-badge">Best Seller</span>
               <span class="product-category-badge">Inverter</span>
-              <img src="images/products/inverter-6.2kw.png" alt="S.O Series 6.2 KW Inverter" loading="lazy">
+              <img src="images/products/fms4.jpeg" alt="S.O Series 6.2 KW Inverter" loading="lazy">
             </div>
             <div class="product-content">
               <h3 class="product-title">S.O Series 6.2 KW</h3>
@@ -1400,7 +1515,7 @@
           <article class="product-card reveal" data-delay="300">
             <div class="product-image">
               <span class="product-category-badge">Battery</span>
-              <img src="images/products/battery-105ah.png" alt="S.O Lithium Battery 51.2V 105Ah" loading="lazy">
+              <img src="images/products/lithium-battery-105ah.jpeg" alt="S.O Lithium Battery 51.2V 105Ah" loading="lazy">
             </div>
             <div class="product-content">
               <h3 class="product-title">S.O Lithium 51.2V 105Ah</h3>
@@ -1436,7 +1551,7 @@
             <div class="product-image">
               <span class="product-badge">High Capacity</span>
               <span class="product-category-badge">Battery</span>
-              <img src="images/products/battery-280ah.png" alt="S.O Lithium Battery 51.2V 280Ah" loading="lazy">
+              <img src="images/products/lithium-280ah.jpeg" alt="S.O Lithium Battery 51.2V 280Ah" loading="lazy">
             </div>
             <div class="product-content">
               <h3 class="product-title">S.O Lithium 51.2V 280Ah</h3>
@@ -1747,6 +1862,91 @@
       </div>
     </section>
 
+    <!-- Video Reviews Section -->
+    <section class="video-reviews-section" id="video-reviews">
+      <div class="container">
+        <div class="section-header">
+          <div class="badge reveal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="23 7 16 12 23 17 23 7"/>
+              <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+            </svg>
+            Product Reviews
+          </div>
+          <h2 class="reveal">Watch <span class="text-gradient">Real Reviews</span></h2>
+          <p class="reveal">See our products in action. Real installations, real results from our customers.</p>
+        </div>
+
+        <div class="videos-grid">
+          <!-- Video 1 -->
+          <div class="video-card reveal" data-delay="0">
+            <div class="video-wrapper">
+              <div class="video-badge">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+                Review
+              </div>
+              <iframe
+                src="https://www.youtube.com/embed/YOUR_VIDEO_ID_1"
+                title="FM's Power Solar Inverter Installation Review"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+              </iframe>
+            </div>
+            <div class="video-info">
+              <h3>S.O Series 6.2KW Installation Review</h3>
+              <p>Customer testimonial showcasing the complete installation process and performance of our 6.2KW solar inverter system.</p>
+            </div>
+          </div>
+
+          <!-- Video 2 -->
+          <div class="video-card reveal" data-delay="100">
+            <div class="video-wrapper">
+              <div class="video-badge">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+                Review
+              </div>
+              <iframe
+                src="https://www.youtube.com/embed/YOUR_VIDEO_ID_2"
+                title="FM's Power Lithium Battery Review"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+              </iframe>
+            </div>
+            <div class="video-info">
+              <h3>Lithium Battery 51.2V 280Ah Review</h3>
+              <p>In-depth review of our high-capacity lithium battery system featuring intelligent BMS and exceptional performance.</p>
+            </div>
+          </div>
+
+          <!-- Video 3 -->
+          <div class="video-card reveal" data-delay="200">
+            <div class="video-wrapper">
+              <div class="video-badge">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+                Review
+              </div>
+              <iframe
+                src="https://www.youtube.com/embed/YOUR_VIDEO_ID_3"
+                title="FM's Power Complete Solar Solution"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+              </iframe>
+            </div>
+            <div class="video-info">
+              <h3>Complete Solar Solution Installation</h3>
+              <p>Full walkthrough of a complete solar installation including inverter, batteries, and solar panels working together.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Services Section -->
     <section class="services-section" id="services">
       <div class="container">
@@ -2010,20 +2210,7 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="index.html" class="logo">
-            <div class="logo-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="5"/>
-                <line x1="12" y1="1" x2="12" y2="3"/>
-                <line x1="12" y1="21" x2="12" y2="23"/>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                <line x1="1" y1="12" x2="3" y2="12"/>
-                <line x1="21" y1="12" x2="23" y2="12"/>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-              </svg>
-            </div>
-            <span>FM's Power</span>
+            <img src="images/logo/fmslogo.png" alt="FM's Power Logo" class="logo-image">
           </a>
           <p>Premium solar inverters, lithium batteries, and solar panels. Save energy, build a better future with our high-efficiency solar solutions.</p>
           <div class="footer-social">
