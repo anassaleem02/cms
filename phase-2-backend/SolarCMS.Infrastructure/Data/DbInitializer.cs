@@ -16,6 +16,15 @@ public static class DbInitializer
         // Apply any pending migrations
         await context.Database.MigrateAsync();
 
+        // Patch: ensure LogoUrl is correct regardless of when seed ran
+        var existingSettings = await context.SiteSettings.FirstOrDefaultAsync();
+        if (existingSettings != null && existingSettings.LogoUrl != "/images/logo/fmslogo.png")
+        {
+            existingSettings.LogoUrl = "/images/logo/fmslogo.png";
+            existingSettings.UpdatedAt = DateTime.UtcNow;
+            await context.SaveChangesAsync();
+        }
+
         // Seed only if DB is empty
         if (await context.Users.AnyAsync()) return;
 
@@ -37,7 +46,7 @@ public static class DbInitializer
         {
             SiteName = "FM's Power",
             TagLine = "Premium Solar Energy Solutions",
-            LogoUrl = "/images/logo/fms-power-logo.png",
+            LogoUrl = "/images/logo/fmslogo.png",
             FaviconUrl = "/images/logo/favicon.ico",
             Phone = "0322-2550299",
             Email = "thefmstrading@gmail.com",
