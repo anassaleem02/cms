@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { QuillModule } from 'ngx-quill';
 import { SharedModule } from '../../shared/shared.module';
 
 import { AuthGuard } from '../../core/guards/auth.guard';
@@ -16,6 +18,7 @@ import { AdminServicesComponent } from './services/admin-services.component';
 import { AdminContactMessagesComponent } from './contact-messages/admin-contact-messages.component';
 import { AdminSettingsComponent } from './settings/admin-settings.component';
 import { AdminNavigationComponent } from './navigation/admin-navigation.component';
+import { AdminMediaComponent } from './media/admin-media.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -32,8 +35,10 @@ const routes: Routes = [
       { path: 'testimonials', component: AdminTestimonialsComponent },
       { path: 'services', component: AdminServicesComponent },
       { path: 'messages', component: AdminContactMessagesComponent },
+      { path: 'contact-messages', component: AdminContactMessagesComponent },
       { path: 'settings', component: AdminSettingsComponent },
-      { path: 'navigation', component: AdminNavigationComponent }
+      { path: 'navigation', component: AdminNavigationComponent },
+      { path: 'media', component: AdminMediaComponent }
     ]
   }
 ];
@@ -50,13 +55,16 @@ const routes: Routes = [
     AdminServicesComponent,
     AdminContactMessagesComponent,
     AdminSettingsComponent,
-    AdminNavigationComponent
+    AdminNavigationComponent,
+    AdminMediaComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
     FormsModule,
+    DragDropModule,
+    QuillModule.forRoot(),
     SharedModule
   ]
 })
