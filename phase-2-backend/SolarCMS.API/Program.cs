@@ -1,16 +1,30 @@
 using System.Text;
+using AspNetCoreRateLimit;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using SolarCMS.API.Middleware;
 using SolarCMS.Application.Mappings;
 using SolarCMS.Application.Validators.Auth;
 using SolarCMS.Infrastructure;
 using SolarCMS.Infrastructure.Data;
 
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File("logs/solarcms-.log", rollingInterval: RollingInterval.Day, retainedFileCountLimit: 14)
+    .CreateBootstrapLogger();
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((ctx, services, configuration) => configuration
+    .ReadFrom.Configuration(ctx.Configuration)
+    .ReadFrom.Services(services)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.File("logs/solarcms-.log", rollingInterval: RollingInterval.Day, retainedFileCountLimit: 14));
 
 // Controllers
 builder.Services.AddControllers();
@@ -92,7 +106,21 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// Response Caching
+builder.Services.AddResponseCaching();
+
+// Rate limiting
+builder.Services.AddMemoryCache();
+builder.Services.Configure<IpRateLimitOptions>(builder.Configuration.GetSection("IpRateLimiting"));
+builder.Services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+builder.Services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+builder.Services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
+builder.Services.AddInMemoryRateLimiting();
+
 var app = builder.Build();
+
+app.UseMiddleware<SecurityHeadersMiddleware>();
 
 // Error handling middleware (must be first)
 app.UseMiddleware<ErrorHandlingMiddleware>();
@@ -105,8 +133,12 @@ app.UseSwaggerUI(c =>
     c.RoutePrefix = "swagger";
 });
 
+app.UseSerilogRequestLogging();
+
 app.UseStaticFiles();
 app.UseCors("AllowAngular");
+app.UseResponseCaching();
+app.UseIpRateLimiting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

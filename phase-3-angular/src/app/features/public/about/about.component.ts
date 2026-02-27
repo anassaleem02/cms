@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { SeoService } from '../../../core/services/seo.service';
 
 @Component({
   selector: 'app-about',
@@ -6,7 +7,16 @@ import { Component } from '@angular/core';
   standalone: false,
   styleUrls: ['./about.component.scss']
 })
-export class AboutComponent {
+export class AboutComponent implements OnInit {
+  constructor(private seoService: SeoService) {}
+
+  ngOnInit(): void {
+    this.seoService.setPage({
+      title: 'About Us',
+      description: "Learn about FM's Power - Karachi's trusted solar energy solutions provider since our founding.",
+      url: '/about'
+    });
+  }
   stats = [
     { value: '500+', label: 'Happy Customers' },
     { value: '10MW+', label: 'Power Generated' },

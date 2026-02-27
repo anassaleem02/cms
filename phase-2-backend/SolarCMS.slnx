@@ -3,4 +3,5 @@
   <Project Path="SolarCMS.Application/SolarCMS.Application.csproj" />
   <Project Path="SolarCMS.Domain/SolarCMS.Domain.csproj" />
   <Project Path="SolarCMS.Infrastructure/SolarCMS.Infrastructure.csproj" />
+  <Project Path="SolarCMS.Tests/SolarCMS.Tests.csproj" />
 </Solution>

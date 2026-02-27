@@ -13,6 +13,7 @@ public class FeaturesController : ControllerBase
     public FeaturesController(IFeatureService featureService) { _featureService = featureService; }
 
     [HttpGet]
+    [ResponseCache(Duration = 60)]
     public async Task<IActionResult> GetAll([FromQuery] bool activeOnly = true)
         => Ok(await _featureService.GetAllAsync(activeOnly));
 

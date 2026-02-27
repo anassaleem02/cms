@@ -13,6 +13,7 @@ public class ServicesController : ControllerBase
     public ServicesController(IServiceItemService serviceItemService) { _serviceItemService = serviceItemService; }
 
     [HttpGet]
+    [ResponseCache(Duration = 60)]
     public async Task<IActionResult> GetAll([FromQuery] bool activeOnly = true)
         => Ok(await _serviceItemService.GetAllAsync(activeOnly));
 

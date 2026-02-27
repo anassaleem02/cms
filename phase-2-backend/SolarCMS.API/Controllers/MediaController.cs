@@ -11,6 +11,13 @@ namespace SolarCMS.API.Controllers;
 public class MediaController : ControllerBase
 {
     private readonly IMediaService _mediaService;
+
+    private static readonly string[] AllowedContentTypes = {
+        "image/jpeg", "image/png", "image/gif", "image/webp", "image/svg+xml",
+        "application/pdf", "video/mp4"
+    };
+    private static readonly long MaxFileSize = 10 * 1024 * 1024; // 10MB
+
     public MediaController(IMediaService mediaService) { _mediaService = mediaService; }
 
     [HttpGet]
@@ -22,6 +29,12 @@ public class MediaController : ControllerBase
     {
         if (file is null || file.Length == 0)
             return BadRequest("No file provided.");
+
+        if (file.Length > MaxFileSize)
+            return BadRequest("File size exceeds 10MB limit.");
+
+        if (!AllowedContentTypes.Contains(file.ContentType))
+            return BadRequest($"File type '{file.ContentType}' is not allowed.");
 
         var dto = new UploadMediaDto
         {

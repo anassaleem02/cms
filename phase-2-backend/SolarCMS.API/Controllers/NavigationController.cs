@@ -13,6 +13,7 @@ public class NavigationController : ControllerBase
     public NavigationController(INavigationService navService) { _navService = navService; }
 
     [HttpGet]
+    [ResponseCache(Duration = 60)]
     public async Task<IActionResult> GetAll([FromQuery] bool activeOnly = true)
         => Ok(await _navService.GetAllAsync(activeOnly));
 

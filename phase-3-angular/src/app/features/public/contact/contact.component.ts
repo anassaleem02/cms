@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ContactService } from '../../../core/services/contact.service';
+import { SeoService } from '../../../core/services/seo.service';
 
 @Component({
   selector: 'app-contact-page',
@@ -24,9 +25,14 @@ export class ContactPageComponent implements OnInit {
     { question: 'How do I maintain my solar system?', answer: 'Our team provides regular maintenance services. Annual checkups are recommended to ensure optimal performance. We also offer remote monitoring so issues can be identified and resolved quickly.' }
   ];
 
-  constructor(private fb: FormBuilder, private contactService: ContactService) {}
+  constructor(private fb: FormBuilder, private contactService: ContactService, private seoService: SeoService) {}
 
   ngOnInit(): void {
+    this.seoService.setPage({
+      title: 'Contact Us',
+      description: "Get in touch with FM's Power for solar installation quotes, product inquiries, and after-sales support in Karachi.",
+      url: '/contact'
+    });
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],

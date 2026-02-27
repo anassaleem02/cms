@@ -19,6 +19,7 @@ public class ProductsController : ControllerBase
 
     /// <summary>Get all products</summary>
     [HttpGet]
+    [ResponseCache(Duration = 60)]
     public async Task<IActionResult> GetAll([FromQuery] ProductCategory? category, [FromQuery] bool activeOnly = true)
     {
         var products = await _productService.GetAllAsync(category, activeOnly);
@@ -27,6 +28,7 @@ public class ProductsController : ControllerBase
 
     /// <summary>Get featured products</summary>
     [HttpGet("featured")]
+    [ResponseCache(Duration = 60)]
     public async Task<IActionResult> GetFeatured()
     {
         var products = await _productService.GetFeaturedAsync();

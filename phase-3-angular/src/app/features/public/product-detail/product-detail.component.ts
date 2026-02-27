@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product, ProductImage } from '../../../core/models/product.model';
 import { ProductService } from '../../../core/services/product.service';
+import { SeoService } from '../../../core/services/seo.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -18,7 +19,8 @@ export class ProductDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private productService: ProductService
+    private productService: ProductService,
+    private seoService: SeoService
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +34,7 @@ export class ProductDetailComponent implements OnInit {
         this.product = product;
         this.selectedImage = product.primaryImage || product.images[0] || null;
         this.loading = false;
+        this.seoService.setProductPage(product);
         this.productService.getRelated(product.id).subscribe(related => {
           this.relatedProducts = related;
         });

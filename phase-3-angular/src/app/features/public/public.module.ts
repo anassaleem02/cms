@@ -21,6 +21,7 @@ import { ProductsPageComponent } from './products/products.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { AboutComponent } from './about/about.component';
 import { ContactPageComponent } from './contact/contact.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -31,7 +32,8 @@ const routes: Routes = [
       { path: 'products', component: ProductsPageComponent },
       { path: 'products/:slug', component: ProductDetailComponent },
       { path: 'about', component: AboutComponent },
-      { path: 'contact', component: ContactPageComponent }
+      { path: 'contact', component: ContactPageComponent },
+      { path: '**', component: NotFoundComponent }
     ]
   }
 ];
@@ -52,7 +54,8 @@ const routes: Routes = [
     ProductsPageComponent,
     ProductDetailComponent,
     AboutComponent,
-    ContactPageComponent
+    ContactPageComponent,
+    NotFoundComponent
   ],
   imports: [
     CommonModule,
