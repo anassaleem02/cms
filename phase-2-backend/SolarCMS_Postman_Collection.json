@@ -1,0 +1,294 @@
+{
+  "info": {
+    "_postman_id": "solar-cms-api-collection",
+    "name": "Solar CMS API",
+    "description": "Complete API collection for FM's Power Solar Business CMS",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000", "type": "string" },
+    { "key": "token", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "event": [{ "listen": "test", "script": { "exec": ["const res = pm.response.json();", "if (res.token) pm.collectionVariables.set('token', res.token);"], "type": "text/javascript" } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"admin@fmspower.com\",\n  \"password\": \"Admin@1234\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] }
+          }
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{token}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"currentPassword\": \"Admin@1234\",\n  \"newPassword\": \"NewPass@5678\",\n  \"confirmPassword\": \"NewPass@5678\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/auth/change-password", "host": ["{{baseUrl}}"], "path": ["api", "auth", "change-password"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Get All Products",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/products", "host": ["{{baseUrl}}"], "path": ["api", "products"] }
+          }
+        },
+        {
+          "name": "Get Featured Products",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/products/featured", "host": ["{{baseUrl}}"], "path": ["api", "products", "featured"] }
+          }
+        },
+        {
+          "name": "Get Products by Category",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/products?category=1", "host": ["{{baseUrl}}"], "path": ["api", "products"], "query": [{ "key": "category", "value": "1", "description": "1=Inverter, 2=Battery, 3=SolarPanel, 4=Accessory" }] }
+          }
+        },
+        {
+          "name": "Get Product by ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/products/1", "host": ["{{baseUrl}}"], "path": ["api", "products", "1"] }
+          }
+        },
+        {
+          "name": "Get Product by Slug",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/products/slug/so-series-1-6kw-inverter", "host": ["{{baseUrl}}"], "path": ["api", "products", "slug", "so-series-1-6kw-inverter"] }
+          }
+        },
+        {
+          "name": "Create Product",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{token}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"New Solar Panel 600W\",\n  \"shortDescription\": \"High efficiency 600W solar panel\",\n  \"description\": \"<p>Detailed description here</p>\",\n  \"category\": 3,\n  \"isFeatured\": false,\n  \"isActive\": true,\n  \"displayOrder\": 10\n}" },
+            "url": { "raw": "{{baseUrl}}/api/products", "host": ["{{baseUrl}}"], "path": ["api", "products"] }
+          }
+        },
+        {
+          "name": "Update Product",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{token}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"S.O Series 1.6 KW Inverter (Updated)\",\n  \"shortDescription\": \"Updated description\",\n  \"description\": \"<p>Updated content</p>\",\n  \"category\": 1,\n  \"isFeatured\": true,\n  \"isActive\": true,\n  \"displayOrder\": 0\n}" },
+            "url": { "raw": "{{baseUrl}}/api/products/1", "host": ["{{baseUrl}}"], "path": ["api", "products", "1"] }
+          }
+        },
+        {
+          "name": "Delete Product",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/products/7", "host": ["{{baseUrl}}"], "path": ["api", "products", "7"] }
+          }
+        },
+        {
+          "name": "Add Product Image",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{token}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"imageUrl\": \"/uploads/product-image.jpg\",\n  \"altText\": \"Product Image\",\n  \"isPrimary\": false,\n  \"displayOrder\": 1\n}" },
+            "url": { "raw": "{{baseUrl}}/api/products/1/images", "host": ["{{baseUrl}}"], "path": ["api", "products", "1", "images"] }
+          }
+        },
+        {
+          "name": "Reorder Products",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{token}}" }],
+            "body": { "mode": "raw", "raw": "[3, 1, 2, 4, 5, 6]" },
+            "url": { "raw": "{{baseUrl}}/api/products/reorder", "host": ["{{baseUrl}}"], "path": ["api", "products", "reorder"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Hero",
+      "item": [
+        {
+          "name": "Get Active Hero",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/hero/active", "host": ["{{baseUrl}}"], "path": ["api", "hero", "active"] }
+          }
+        },
+        {
+          "name": "Update Hero",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{token}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"headline\": \"Power Your Future with Solar Energy\",\n  \"subheadline\": \"Premium solar inverters, lithium batteries & panels with 5-year warranty.\",\n  \"primaryButtonText\": \"Explore Products\",\n  \"primaryButtonUrl\": \"/products\",\n  \"secondaryButtonText\": \"Get Quote\",\n  \"secondaryButtonUrl\": \"/contact\",\n  \"backgroundImageUrl\": \"/images/hero/solar_img.jpg\",\n  \"isActive\": true,\n  \"stats\": [\n    { \"value\": \"500+\", \"label\": \"Happy Customers\", \"displayOrder\": 0 },\n    { \"value\": \"10MW+\", \"label\": \"Power Generated\", \"displayOrder\": 1 },\n    { \"value\": \"5 Years\", \"label\": \"Warranty\", \"displayOrder\": 2 },\n    { \"value\": \"98.5%\", \"label\": \"Efficiency\", \"displayOrder\": 3 }\n  ]\n}" },
+            "url": { "raw": "{{baseUrl}}/api/hero/1", "host": ["{{baseUrl}}"], "path": ["api", "hero", "1"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Features",
+      "item": [
+        {
+          "name": "Get All Features",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/features", "host": ["{{baseUrl}}"], "path": ["api", "features"] }
+          }
+        },
+        {
+          "name": "Create Feature",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{token}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Fast Installation\",\n  \"description\": \"Professional installation in just 1 day\",\n  \"icon\": \"clock\",\n  \"isActive\": true,\n  \"displayOrder\": 6\n}" },
+            "url": { "raw": "{{baseUrl}}/api/features", "host": ["{{baseUrl}}"], "path": ["api", "features"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Testimonials",
+      "item": [
+        {
+          "name": "Get All Testimonials",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/testimonials", "host": ["{{baseUrl}}"], "path": ["api", "testimonials"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Services",
+      "item": [
+        {
+          "name": "Get All Services",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/services", "host": ["{{baseUrl}}"], "path": ["api", "services"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Contact",
+      "item": [
+        {
+          "name": "Submit Contact Form",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"test@example.com\",\n  \"phone\": \"03001234567\",\n  \"message\": \"I am interested in a 4KW solar system for my home.\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/contact", "host": ["{{baseUrl}}"], "path": ["api", "contact"] }
+          }
+        },
+        {
+          "name": "Get All Messages (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/contact", "host": ["{{baseUrl}}"], "path": ["api", "contact"] }
+          }
+        },
+        {
+          "name": "Get Unread Count",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/contact/unread/count", "host": ["{{baseUrl}}"], "path": ["api", "contact", "unread", "count"] }
+          }
+        },
+        {
+          "name": "Mark as Read",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/contact/1/read", "host": ["{{baseUrl}}"], "path": ["api", "contact", "1", "read"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Navigation",
+      "item": [
+        {
+          "name": "Get Navigation",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/navigation", "host": ["{{baseUrl}}"], "path": ["api", "navigation"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Settings",
+      "item": [
+        {
+          "name": "Get Site Settings",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/settings", "host": ["{{baseUrl}}"], "path": ["api", "settings"] }
+          }
+        },
+        {
+          "name": "Update Settings (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{token}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"siteName\": \"FM's Power\",\n  \"tagLine\": \"Premium Solar Energy Solutions\",\n  \"phone\": \"0322-2550299\",\n  \"email\": \"thefmstrading@gmail.com\",\n  \"whatsApp\": \"+923222550299\",\n  \"address\": \"Shop G31-G50, Ground Floor, Al-Najeebi Electronic Bazar, Saddar, Karachi\",\n  \"businessHours\": \"Mon-Sat: 9:00 AM - 8:00 PM\",\n  \"logoUrl\": \"/images/logo/fms-power-logo.png\",\n  \"faviconUrl\": \"/images/logo/favicon.ico\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/settings", "host": ["{{baseUrl}}"], "path": ["api", "settings"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "item": [
+        {
+          "name": "Get Analytics",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/dashboard/analytics", "host": ["{{baseUrl}}"], "path": ["api", "dashboard", "analytics"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Media",
+      "item": [
+        {
+          "name": "Get All Files",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/media", "host": ["{{baseUrl}}"], "path": ["api", "media"] }
+          }
+        },
+        {
+          "name": "Upload File",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "body": { "mode": "formdata", "formdata": [{ "key": "file", "type": "file", "src": "" }, { "key": "tags", "value": "product,hero", "type": "text" }] },
+            "url": { "raw": "{{baseUrl}}/api/media/upload", "host": ["{{baseUrl}}"], "path": ["api", "media", "upload"] }
+          }
+        }
+      ]
+    }
+  ]
+}

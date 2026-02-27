@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="SolarCMS.API/SolarCMS.API.csproj" />
+  <Project Path="SolarCMS.Application/SolarCMS.Application.csproj" />
+  <Project Path="SolarCMS.Domain/SolarCMS.Domain.csproj" />
+  <Project Path="SolarCMS.Infrastructure/SolarCMS.Infrastructure.csproj" />
+</Solution>
