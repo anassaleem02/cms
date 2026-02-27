@@ -11,6 +11,7 @@ public class Product : BaseEntity
     public string Description { get; set; } = string.Empty;
     public ProductCategory Category { get; set; }
     public bool IsFeatured { get; set; }
+    public string? BadgeLabel { get; set; }
     public bool IsActive { get; set; } = true;
     public int DisplayOrder { get; set; }
     public string? PdfBrochureUrl { get; set; }

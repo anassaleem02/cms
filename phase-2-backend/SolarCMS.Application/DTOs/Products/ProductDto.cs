@@ -12,6 +12,7 @@ public class ProductDto
     public ProductCategory Category { get; set; }
     public string CategoryName => Category.ToString();
     public bool IsFeatured { get; set; }
+    public string? BadgeLabel { get; set; }
     public bool IsActive { get; set; }
     public int DisplayOrder { get; set; }
     public string? PdfBrochureUrl { get; set; }

@@ -37,7 +37,7 @@
         <div class="product-image">
           <div class="product-badges">
             <span class="badge badge-primary">{{ getCategoryLabel(product.category) }}</span>
-            <span class="badge badge-accent" *ngIf="product.isFeatured">Featured</span>
+            <span class="badge badge-accent" *ngIf="product.badgeLabel">{{ product.badgeLabel }}</span>
           </div>
           <img
             *ngIf="product.primaryImage"

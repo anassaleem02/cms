@@ -16,6 +16,7 @@ import { TestimonialsComponent } from './home/components/testimonials/testimonia
 import { ServicesSectionComponent } from './home/components/services-section/services-section.component';
 import { CtaComponent } from './home/components/cta/cta.component';
 import { ContactFormComponent } from './home/components/contact-form/contact-form.component';
+import { VideoReviewsComponent } from './home/components/video-reviews/video-reviews.component';
 
 import { ProductsPageComponent } from './products/products.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
@@ -51,6 +52,7 @@ const routes: Routes = [
     ServicesSectionComponent,
     CtaComponent,
     ContactFormComponent,
+    VideoReviewsComponent,
     ProductsPageComponent,
     ProductDetailComponent,
     AboutComponent,

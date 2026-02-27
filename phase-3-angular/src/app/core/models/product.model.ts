@@ -24,6 +24,7 @@ export interface Product {
   category: ProductCategory;
   categoryName: string;
   isFeatured: boolean;
+  badgeLabel?: string;
   isActive: boolean;
   displayOrder: number;
   pdfBrochureUrl?: string;
@@ -40,6 +41,7 @@ export interface CreateProductDto {
   description: string;
   category: ProductCategory;
   isFeatured: boolean;
+  badgeLabel?: string;
   isActive: boolean;
   displayOrder: number;
   pdfBrochureUrl?: string;
