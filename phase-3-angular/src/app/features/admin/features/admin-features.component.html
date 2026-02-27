@@ -1,0 +1,61 @@
+<div class="page-header">
+  <h1>Features</h1>
+  <button class="btn btn-primary" (click)="openCreate()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    Add Feature
+  </button>
+</div>
+
+<div class="skeleton" style="height:300px;border-radius:var(--radius-xl);" *ngIf="loading"></div>
+
+<div class="items-grid" *ngIf="!loading">
+  <div class="item-card glass-card" *ngFor="let item of items">
+    <div class="item-header">
+      <div class="item-icon-tag">{{ item.icon }}</div>
+      <span class="badge" [class.badge-primary]="item.isActive" [class.badge-muted]="!item.isActive">{{ item.isActive ? 'Active' : 'Inactive' }}</span>
+    </div>
+    <h3>{{ item.title }}</h3>
+    <p>{{ item.description }}</p>
+    <div class="item-actions">
+      <button class="btn btn-outline btn-sm" (click)="openEdit(item)">Edit</button>
+      <button class="btn btn-sm delete-btn" (click)="confirmDelete(item.id)">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- Form Modal -->
+<div class="modal-overlay" *ngIf="showForm" (click)="showForm = false">
+  <div class="modal glass-card" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>{{ editingId ? 'Edit Feature' : 'Add Feature' }}</h2>
+      <button class="modal-close" (click)="showForm = false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-group"><label>Title *</label><input type="text" formControlName="title" /></div>
+      <div class="form-group"><label>Description *</label><textarea formControlName="description" rows="3"></textarea></div>
+      <div class="form-group">
+        <label>Icon</label>
+        <select formControlName="icon"><option *ngFor="let icon of iconOptions" [value]="icon">{{ icon }}</option></select>
+      </div>
+      <div class="form-row-2">
+        <div class="form-group"><label>Display Order</label><input type="number" formControlName="displayOrder" /></div>
+        <div class="form-group checkbox-group"><label><input type="checkbox" formControlName="isActive" /> Active</label></div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline" (click)="showForm = false">Cancel</button>
+        <button type="submit" class="btn btn-primary" [disabled]="isSaving">{{ isSaving ? 'Saving...' : 'Save' }}</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="deleteConfirmId" (click)="deleteConfirmId = null">
+  <div class="modal modal-sm glass-card" (click)="$event.stopPropagation()">
+    <h3>Delete Feature?</h3>
+    <p>This cannot be undone.</p>
+    <div class="modal-actions">
+      <button class="btn btn-outline" (click)="deleteConfirmId = null">Cancel</button>
+      <button class="btn" style="background:var(--color-error);color:white;" (click)="doDelete()">Delete</button>
+    </div>
+  </div>
+</div>

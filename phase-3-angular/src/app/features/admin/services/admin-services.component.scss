@@ -1,0 +1,11 @@
+.action-btn { width: 30px; height: 30px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; border: 1px solid var(--glass-border); cursor: pointer; transition: all var(--duration-fast); background: var(--glass-bg); }
+.edit-btn { color: var(--color-info); &:hover { background: rgba(59,130,246,0.1); } }
+.delete-btn { color: var(--color-error); &:hover { background: rgba(239,68,68,0.1); } }
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); z-index: 500; display: flex; align-items: center; justify-content: center; padding: var(--space-4); }
+.modal { width: 100%; max-width: 500px; border-radius: var(--radius-2xl); padding: var(--space-8); max-height: 90vh; overflow-y: auto; }
+.modal-sm { max-width: 360px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: var(--space-4); }
+.modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-6); h2 { font-size: var(--text-xl); font-weight: 700; } }
+.modal-close { width: 32px; height: 32px; border-radius: var(--radius-full); background: var(--glass-bg); border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center; color: var(--text-secondary); cursor: pointer; }
+.modal-actions { display: flex; gap: var(--space-3); justify-content: flex-end; margin-top: var(--space-6); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-4); }
+.checkbox-group { label { display: flex; align-items: center; gap: var(--space-2); cursor: pointer; margin-top: var(--space-6); } }

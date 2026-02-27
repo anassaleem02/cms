@@ -1,0 +1,66 @@
+<section class="section testimonials-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Customer Reviews
+      </div>
+      <h2>What Our <span class="gradient-text">Customers Say</span></h2>
+      <p>Trusted by 500+ homeowners and businesses across Karachi.</p>
+    </div>
+
+    <div class="testimonials-wrapper" *ngIf="!loading && testimonials.length">
+      <!-- Carousel -->
+      <div class="testimonials-carousel">
+        <div class="testimonial-card glass-card"
+             *ngFor="let t of testimonials; let i = index"
+             [class.active]="i === currentIndex"
+             [class.prev]="i === (currentIndex - 1 + testimonials.length) % testimonials.length"
+             [class.next]="i === (currentIndex + 1) % testimonials.length">
+          <!-- Quote Icon -->
+          <div class="quote-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" opacity="0.3"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+          </div>
+
+          <!-- Stars -->
+          <div class="stars">
+            <svg *ngFor="let s of getStars(t.rating)" width="16" height="16" viewBox="0 0 24 24" fill="#F59E0B"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+
+          <!-- Review -->
+          <p class="review-text">"{{ t.review }}"</p>
+
+          <!-- Customer -->
+          <div class="customer">
+            <img [src]="t.customerImageUrl" [alt]="t.customerName" class="customer-img" loading="lazy" onerror="this.src='https://ui-avatars.com/api/?name=Customer&background=10B981&color=fff'" />
+            <div class="customer-info">
+              <div class="customer-name">{{ t.customerName }}</div>
+              <div class="customer-title">{{ t.customerTitle }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="carousel-controls">
+        <button class="carousel-btn" (click)="prev()" aria-label="Previous">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="carousel-dots">
+          <button class="dot"
+                  *ngFor="let t of testimonials; let i = index"
+                  [class.active]="i === currentIndex"
+                  (click)="goTo(i)"
+                  [attr.aria-label]="'Go to testimonial ' + (i + 1)">
+          </button>
+        </div>
+        <button class="carousel-btn" (click)="next()" aria-label="Next">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div class="skeleton" style="height:280px;border-radius:var(--radius-2xl);" *ngIf="loading"></div>
+  </div>
+</section>

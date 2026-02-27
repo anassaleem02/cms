@@ -1,0 +1,90 @@
+<div class="page-header">
+  <h1>Hero Section</h1>
+  <div class="save-status" *ngIf="saveSuccess">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+    Saved successfully!
+  </div>
+</div>
+
+<div class="skeleton" style="height:400px;border-radius:var(--radius-xl);" *ngIf="loading"></div>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="!loading">
+  <div class="admin-card glass-card">
+    <h3>Headline & Subheadline</h3>
+    <div class="form-group">
+      <label>Headline *</label>
+      <input type="text" formControlName="headline" placeholder="Power Your Future with Solar Energy" />
+    </div>
+    <div class="form-group">
+      <label>Subheadline *</label>
+      <textarea formControlName="subheadline" rows="3" placeholder="Premium solar solutions..."></textarea>
+    </div>
+  </div>
+
+  <div class="admin-card glass-card">
+    <h3>Call-to-Action Buttons</h3>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Primary Button Text</label>
+        <input type="text" formControlName="primaryButtonText" />
+      </div>
+      <div class="form-group">
+        <label>Primary Button URL</label>
+        <input type="text" formControlName="primaryButtonUrl" />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Secondary Button Text</label>
+        <input type="text" formControlName="secondaryButtonText" />
+      </div>
+      <div class="form-group">
+        <label>Secondary Button URL</label>
+        <input type="text" formControlName="secondaryButtonUrl" />
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-card glass-card">
+    <h3>Background Image</h3>
+    <div class="form-group">
+      <label>Background Image URL</label>
+      <input type="text" formControlName="backgroundImageUrl" placeholder="/images/hero/solar_img.jpg" />
+    </div>
+    <div class="form-group checkbox-group">
+      <label><input type="checkbox" formControlName="isActive" /> Hero Section Active</label>
+    </div>
+  </div>
+
+  <div class="admin-card glass-card">
+    <div class="card-header-row">
+      <h3>Stats</h3>
+      <button type="button" class="btn btn-outline btn-sm" (click)="addStat()">+ Add Stat</button>
+    </div>
+    <div class="stats-list" formArrayName="stats">
+      <div class="stat-form-row" *ngFor="let ctrl of statsArray.controls; let i = index" [formGroupName]="i">
+        <div class="form-group">
+          <label>Value</label>
+          <input type="text" formControlName="value" placeholder="500+" />
+        </div>
+        <div class="form-group">
+          <label>Label</label>
+          <input type="text" formControlName="label" placeholder="Happy Customers" />
+        </div>
+        <div class="form-group" style="max-width:80px;">
+          <label>Order</label>
+          <input type="number" formControlName="displayOrder" />
+        </div>
+        <button type="button" class="remove-btn" (click)="removeStat(i)" *ngIf="statsArray.length > 1">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary btn-lg" [disabled]="isSaving">
+      {{ isSaving ? 'Saving...' : 'Save Hero Section' }}
+    </button>
+  </div>
+</form>

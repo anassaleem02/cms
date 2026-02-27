@@ -1,0 +1,24 @@
+<section class="section features-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Why Choose Us
+      </div>
+      <h2>Engineered for <span class="gradient-text">Excellence</span></h2>
+      <p>Our solar solutions are built with cutting-edge technology to deliver maximum performance and reliability.</p>
+    </div>
+
+    <div class="grid-3" *ngIf="!loading">
+      <div class="feature-card glass-card" *ngFor="let feature of features">
+        <div class="feature-icon" [innerHTML]="getIconSvg(feature.icon)"></div>
+        <h3 class="feature-title">{{ feature.title }}</h3>
+        <p class="feature-desc">{{ feature.description }}</p>
+      </div>
+    </div>
+
+    <div class="grid-3" *ngIf="loading">
+      <div class="skeleton" style="height:180px;border-radius:var(--radius-2xl);" *ngFor="let i of [1,2,3,4,5,6]"></div>
+    </div>
+  </div>
+</section>

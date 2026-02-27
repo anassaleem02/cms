@@ -1,0 +1,75 @@
+<div class="page-header">
+  <div style="display:flex;align-items:center;gap:var(--space-3);">
+    <h1>Messages</h1>
+    <span class="unread-badge" *ngIf="unreadCount > 0">{{ unreadCount }} unread</span>
+  </div>
+</div>
+
+<div class="skeleton" style="height:300px;border-radius:var(--radius-xl);" *ngIf="loading"></div>
+
+<div class="table-wrapper" *ngIf="!loading">
+  <table>
+    <thead><tr><th>Status</th><th>Name</th><th>Contact</th><th>Message</th><th>Date</th><th>Actions</th></tr></thead>
+    <tbody>
+      <tr *ngFor="let msg of messages" [class.unread-row]="!msg.isRead">
+        <td>
+          <span class="read-badge" [class.unread]="!msg.isRead">{{ msg.isRead ? 'Read' : 'New' }}</span>
+        </td>
+        <td style="font-weight:{{ msg.isRead ? '400' : '700' }};">{{ msg.name }}</td>
+        <td>
+          <div style="font-size:var(--text-xs);">
+            <div>{{ msg.email }}</div>
+            <div style="color:var(--text-tertiary);">{{ msg.phone }}</div>
+          </div>
+        </td>
+        <td style="max-width:200px;font-size:var(--text-xs);color:var(--text-secondary);">{{ msg.message | slice:0:60 }}...</td>
+        <td style="font-size:var(--text-xs);white-space:nowrap;">{{ formatDate(msg.createdAt) }}</td>
+        <td>
+          <div style="display:flex;gap:var(--space-2);">
+            <button class="action-btn view-btn" (click)="viewMessage(msg)" title="View">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+            <button class="action-btn delete-btn" (click)="confirmDelete(msg.id)" title="Delete">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="text-align:center;padding:var(--space-12);color:var(--text-secondary);" *ngIf="messages.length === 0">No messages yet.</div>
+</div>
+
+<!-- View Message Modal -->
+<div class="modal-overlay" *ngIf="selectedMessage" (click)="selectedMessage = null">
+  <div class="modal glass-card" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Message from {{ selectedMessage.name }}</h2>
+      <button class="modal-close" (click)="selectedMessage = null"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="message-detail">
+      <div class="detail-row"><span class="detail-label">Name:</span><span>{{ selectedMessage.name }}</span></div>
+      <div class="detail-row"><span class="detail-label">Email:</span><a [href]="'mailto:' + selectedMessage.email">{{ selectedMessage.email }}</a></div>
+      <div class="detail-row"><span class="detail-label">Phone:</span><a [href]="'tel:' + selectedMessage.phone">{{ selectedMessage.phone }}</a></div>
+      <div class="detail-row"><span class="detail-label">Date:</span><span>{{ formatDate(selectedMessage.createdAt) }}</span></div>
+      <div class="message-body">
+        <div class="detail-label">Message:</div>
+        <p>{{ selectedMessage.message }}</p>
+      </div>
+      <div class="reply-actions">
+        <a [href]="'mailto:' + selectedMessage.email" class="btn btn-primary">Reply via Email</a>
+        <a [href]="'https://wa.me/' + selectedMessage.phone.replace(/[^0-9]/g,'')" target="_blank" class="btn btn-outline">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="deleteConfirmId" (click)="deleteConfirmId = null">
+  <div class="modal modal-sm glass-card" (click)="$event.stopPropagation()">
+    <h3>Delete Message?</h3><p>This cannot be undone.</p>
+    <div class="modal-actions">
+      <button class="btn btn-outline" (click)="deleteConfirmId = null">Cancel</button>
+      <button class="btn" style="background:var(--color-error);color:white;" (click)="doDelete()">Delete</button>
+    </div>
+  </div>
+</div>

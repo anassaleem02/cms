@@ -1,0 +1,78 @@
+<section class="section products-showcase">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        Featured Products
+      </div>
+      <h2>Our <span class="gradient-text">Premium Products</span></h2>
+      <p>Industry-leading solar inverters, lithium batteries, and solar panels with 5-year warranty.</p>
+    </div>
+
+    <!-- Loading Skeletons -->
+    <div class="grid-3" *ngIf="loading">
+      <div class="product-card skeleton-card" *ngFor="let i of [1,2,3]">
+        <div class="skeleton" style="height:220px;border-radius:var(--radius-xl) var(--radius-xl) 0 0;"></div>
+        <div style="padding:var(--space-6);">
+          <div class="skeleton" style="height:20px;width:60%;margin-bottom:var(--space-3);"></div>
+          <div class="skeleton" style="height:16px;width:90%;margin-bottom:var(--space-2);"></div>
+          <div class="skeleton" style="height:16px;width:75%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="grid-3" *ngIf="!loading">
+      <div class="product-card glass-card" *ngFor="let product of products">
+        <!-- Image -->
+        <div class="product-image">
+          <div class="product-badges">
+            <span class="badge badge-primary">{{ getCategoryLabel(product.category) }}</span>
+            <span class="badge badge-accent" *ngIf="product.isFeatured">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              Featured
+            </span>
+          </div>
+          <img
+            *ngIf="product.primaryImage"
+            [src]="product.primaryImage.imageUrl"
+            [alt]="product.primaryImage.altText || product.name"
+            class="product-img"
+            loading="lazy"
+            onerror="this.style.display='none'"
+          />
+          <div class="product-img-placeholder" *ngIf="!product.primaryImage">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="product-content">
+          <h3 class="product-name">{{ product.name }}</h3>
+          <p class="product-desc">{{ product.shortDescription }}</p>
+
+          <!-- Key Specs -->
+          <div class="product-specs" *ngIf="product.specifications.length">
+            <div class="spec-item" *ngFor="let spec of product.specifications.slice(0, 3)">
+              <span class="spec-key">{{ spec.key }}</span>
+              <span class="spec-value">{{ spec.value }}</span>
+            </div>
+          </div>
+
+          <a [routerLink]="'/products/' + product.slug" class="btn btn-primary product-btn">
+            View Details
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- View All -->
+    <div class="view-all-wrap">
+      <a routerLink="/products" class="btn btn-outline btn-lg">
+        View All Products
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+</section>

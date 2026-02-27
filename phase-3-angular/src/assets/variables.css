@@ -1,0 +1,339 @@
+/* ============================================
+   FM's Power Solar - Design System Variables
+   ============================================ */
+
+:root {
+  /* ==========================================
+     COLOR PALETTE
+     ========================================== */
+
+  /* Primary - Solar Blue (FM's Power Brand) */
+  --color-primary-50: #E6F4FF;
+  --color-primary-100: #BAE0FF;
+  --color-primary-200: #91CAFF;
+  --color-primary-300: #69B1FF;
+  --color-primary-400: #4096FF;
+  --color-primary-500: #1677FF;
+  --color-primary-600: #0958D9;
+  --color-primary-700: #003EB3;
+  --color-primary-800: #002C8C;
+  --color-primary-900: #001D66;
+
+  /* Accent - Cyan Blue (Secondary Brand Color) */
+  --color-accent-50: #E6FCFF;
+  --color-accent-100: #B5F5FF;
+  --color-accent-200: #87E8FF;
+  --color-accent-300: #5CD8FF;
+  --color-accent-400: #4AB5D8;
+  --color-accent-500: #36A3BF;
+  --color-accent-600: #2E8BA3;
+  --color-accent-700: #1E6B7A;
+  --color-accent-800: #155566;
+  --color-accent-900: #0D3F4D;
+
+  /* Neutral - Carbon */
+  --color-neutral-50: #FAFAFA;
+  --color-neutral-100: #F4F4F5;
+  --color-neutral-200: #E4E4E7;
+  --color-neutral-300: #D4D4D8;
+  --color-neutral-400: #A1A1AA;
+  --color-neutral-500: #71717A;
+  --color-neutral-600: #52525B;
+  --color-neutral-700: #3F3F46;
+  --color-neutral-800: #27272A;
+  --color-neutral-900: #18181B;
+  --color-neutral-950: #09090B;
+
+  /* Semantic Colors */
+  --color-success: #22C55E;
+  --color-success-light: #4ADE80;
+  --color-warning: #EAB308;
+  --color-warning-light: #FACC15;
+  --color-error: #EF4444;
+  --color-error-light: #F87171;
+  --color-info: #3B82F6;
+  --color-info-light: #60A5FA;
+
+  /* Background Colors */
+  --bg-primary: #0A0A0B;
+  --bg-secondary: #111113;
+  --bg-tertiary: #1A1A1D;
+  --bg-elevated: #27272A;
+
+  /* Text Colors */
+  --text-primary: #FAFAFA;
+  --text-secondary: #A1A1AA;
+  --text-tertiary: #71717A;
+  --text-muted: #52525B;
+
+  /* Border Colors */
+  --border-primary: #27272A;
+  --border-secondary: #3F3F46;
+  --border-focus: #1677FF;
+
+  /* ==========================================
+     GRADIENTS
+     ========================================== */
+
+  --gradient-primary: linear-gradient(135deg, #1677FF 0%, #0958D9 50%, #003EB3 100%);
+  --gradient-primary-hover: linear-gradient(135deg, #4096FF 0%, #1677FF 50%, #0958D9 100%);
+  --gradient-gold: linear-gradient(135deg, #FAAD14 0%, #D98A0B 100%);
+  --gradient-cyan: linear-gradient(135deg, #4AB5D8 0%, #36A3BF 100%);
+  --gradient-dark: linear-gradient(180deg, #0A0A0B 0%, #111113 50%, #1A1A1D 100%);
+  --gradient-radial: radial-gradient(ellipse at center, #1A1A1D 0%, #0A0A0B 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+  --gradient-mesh:
+    radial-gradient(at 40% 20%, rgba(22, 119, 255, 0.15) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, rgba(74, 181, 216, 0.12) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, rgba(22, 119, 255, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 50%, rgba(74, 181, 216, 0.08) 0px, transparent 50%);
+  --gradient-hero:
+    linear-gradient(180deg, rgba(10, 10, 11, 0) 0%, rgba(10, 10, 11, 0.8) 100%),
+    var(--gradient-mesh);
+
+  /* Additional Color Variables */
+  --color-gold: #FAAD14;
+  --color-green: #52C41A;
+
+  /* ==========================================
+     TYPOGRAPHY
+     ========================================== */
+
+  /* Font Families */
+  --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Font Sizes */
+  --text-xs: 0.75rem;      /* 12px */
+  --text-sm: 0.875rem;     /* 14px */
+  --text-base: 1rem;       /* 16px */
+  --text-lg: 1.125rem;     /* 18px */
+  --text-xl: 1.25rem;      /* 20px */
+  --text-2xl: 1.5rem;      /* 24px */
+  --text-3xl: 1.875rem;    /* 30px */
+  --text-4xl: 2.25rem;     /* 36px */
+  --text-5xl: 3rem;        /* 48px */
+  --text-6xl: 3.75rem;     /* 60px */
+  --text-7xl: 4.5rem;      /* 72px */
+
+  /* Font Weights */
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* Line Heights */
+  --leading-none: 1;
+  --leading-tight: 1.1;
+  --leading-snug: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.7;
+  --leading-loose: 2;
+
+  /* Letter Spacing */
+  --tracking-tighter: -0.05em;
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
+
+  /* ==========================================
+     SPACING
+     ========================================== */
+
+  --space-0: 0;
+  --space-px: 1px;
+  --space-0-5: 0.125rem;   /* 2px */
+  --space-1: 0.25rem;      /* 4px */
+  --space-1-5: 0.375rem;   /* 6px */
+  --space-2: 0.5rem;       /* 8px */
+  --space-2-5: 0.625rem;   /* 10px */
+  --space-3: 0.75rem;      /* 12px */
+  --space-3-5: 0.875rem;   /* 14px */
+  --space-4: 1rem;         /* 16px */
+  --space-5: 1.25rem;      /* 20px */
+  --space-6: 1.5rem;       /* 24px */
+  --space-7: 1.75rem;      /* 28px */
+  --space-8: 2rem;         /* 32px */
+  --space-9: 2.25rem;      /* 36px */
+  --space-10: 2.5rem;      /* 40px */
+  --space-11: 2.75rem;     /* 44px */
+  --space-12: 3rem;        /* 48px */
+  --space-14: 3.5rem;      /* 56px */
+  --space-16: 4rem;        /* 64px */
+  --space-20: 5rem;        /* 80px */
+  --space-24: 6rem;        /* 96px */
+  --space-28: 7rem;        /* 112px */
+  --space-32: 8rem;        /* 128px */
+  --space-36: 9rem;        /* 144px */
+  --space-40: 10rem;       /* 160px */
+
+  /* ==========================================
+     BORDERS
+     ========================================== */
+
+  --radius-none: 0;
+  --radius-sm: 0.25rem;    /* 4px */
+  --radius-md: 0.5rem;     /* 8px */
+  --radius-lg: 0.75rem;    /* 12px */
+  --radius-xl: 1rem;       /* 16px */
+  --radius-2xl: 1.5rem;    /* 24px */
+  --radius-3xl: 2rem;      /* 32px */
+  --radius-full: 9999px;
+
+  --border-width-thin: 1px;
+  --border-width-medium: 2px;
+  --border-width-thick: 4px;
+
+  /* ==========================================
+     SHADOWS
+     ========================================== */
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+  --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+
+  /* Glow Shadows */
+  --shadow-glow-sm: 0 0 20px rgba(22, 119, 255, 0.2);
+  --shadow-glow-md: 0 0 30px rgba(22, 119, 255, 0.3);
+  --shadow-glow-lg: 0 0 40px rgba(22, 119, 255, 0.4);
+  --shadow-glow-cyan: 0 0 30px rgba(74, 181, 216, 0.3);
+  --shadow-glow-gold: 0 0 30px rgba(250, 173, 20, 0.3);
+
+  /* Card Shadows */
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-card-hover: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 40px rgba(22, 119, 255, 0.15);
+
+  /* ==========================================
+     TRANSITIONS & ANIMATIONS
+     ========================================== */
+
+  /* Durations */
+  --duration-fastest: 75ms;
+  --duration-faster: 100ms;
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --duration-slower: 700ms;
+  --duration-slowest: 1000ms;
+
+  /* Easing Functions */
+  --ease-linear: linear;
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /* Common Transitions */
+  --transition-fast: all 150ms var(--ease-out);
+  --transition-normal: all 300ms var(--ease-out);
+  --transition-slow: all 500ms var(--ease-out);
+  --transition-colors: color 150ms var(--ease-out), background-color 150ms var(--ease-out), border-color 150ms var(--ease-out);
+  --transition-transform: transform 300ms var(--ease-out);
+  --transition-shadow: box-shadow 300ms var(--ease-out);
+
+  /* ==========================================
+     Z-INDEX SCALE
+     ========================================== */
+
+  --z-behind: -1;
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-popover: 600;
+  --z-tooltip: 700;
+  --z-toast: 800;
+  --z-top: 999;
+
+  /* ==========================================
+     LAYOUT
+     ========================================== */
+
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1536px;
+
+  --header-height: 80px;
+  --header-height-mobile: 64px;
+
+  /* ==========================================
+     GLASSMORPHISM
+     ========================================== */
+
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-bg-hover: rgba(255, 255, 255, 0.08);
+  --glass-bg-active: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-border-hover: rgba(255, 255, 255, 0.15);
+  --glass-blur: blur(12px);
+  --glass-blur-lg: blur(20px);
+}
+
+/* ============================================
+   LIGHT THEME
+   ============================================ */
+[data-theme="light"] {
+  /* Background Colors */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F8FAFC;
+  --bg-tertiary: #F1F5F9;
+  --bg-elevated: #FFFFFF;
+
+  /* Text Colors */
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-tertiary: #64748B;
+  --text-muted: #94A3B8;
+
+  /* Border Colors */
+  --border-primary: #E2E8F0;
+  --border-secondary: #CBD5E1;
+  --border-focus: #1677FF;
+
+  /* Gradients for Light Theme */
+  --gradient-dark: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 50%, #F1F5F9 100%);
+  --gradient-radial: radial-gradient(ellipse at center, #F1F5F9 0%, #FFFFFF 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.01) 100%);
+  --gradient-mesh:
+    radial-gradient(at 40% 20%, rgba(22, 119, 255, 0.08) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, rgba(74, 181, 216, 0.06) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, rgba(22, 119, 255, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 50%, rgba(74, 181, 216, 0.04) 0px, transparent 50%);
+  --gradient-hero:
+    linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.9) 100%),
+    var(--gradient-mesh);
+
+  /* Shadows for Light Theme */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.04);
+
+  /* Card Shadows for Light Theme */
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-card-hover: 0 8px 30px rgba(0, 0, 0, 0.12), 0 0 40px rgba(22, 119, 255, 0.08);
+
+  /* Glassmorphism for Light Theme */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-bg-hover: rgba(255, 255, 255, 0.85);
+  --glass-bg-active: rgba(255, 255, 255, 0.9);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-border-hover: rgba(0, 0, 0, 0.12);
+}

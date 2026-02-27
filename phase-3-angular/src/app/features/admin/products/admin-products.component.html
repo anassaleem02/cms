@@ -1,0 +1,141 @@
+<div class="page-header">
+  <h1>Products</h1>
+  <button class="btn btn-primary" (click)="openCreate()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    Add Product
+  </button>
+</div>
+
+<!-- Products Table -->
+<div class="table-wrapper" *ngIf="!loading">
+  <table>
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Category</th>
+        <th>Featured</th>
+        <th>Active</th>
+        <th>Order</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>
+          <div class="product-cell">
+            <div class="product-thumb">
+              <img *ngIf="product.primaryImage" [src]="product.primaryImage.imageUrl" [alt]="product.name" onerror="this.style.display='none'" />
+              <div *ngIf="!product.primaryImage" class="no-thumb">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.4"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+              </div>
+            </div>
+            <div>
+              <div class="product-name">{{ product.name }}</div>
+              <div class="product-slug">{{ product.slug }}</div>
+            </div>
+          </div>
+        </td>
+        <td><span class="badge badge-primary">{{ getCategoryLabel(product.category) }}</span></td>
+        <td>
+          <span class="badge" [class.badge-accent]="product.isFeatured" [class.badge-muted]="!product.isFeatured">
+            {{ product.isFeatured ? 'Yes' : 'No' }}
+          </span>
+        </td>
+        <td>
+          <span class="status-dot" [class.active]="product.isActive" [class.inactive]="!product.isActive">
+            {{ product.isActive ? 'Active' : 'Inactive' }}
+          </span>
+        </td>
+        <td>{{ product.displayOrder }}</td>
+        <td>
+          <div class="action-btns">
+            <button class="action-btn edit-btn" (click)="openEdit(product)" title="Edit">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </button>
+            <button class="action-btn delete-btn" (click)="confirmDelete(product.id)" title="Delete">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="empty-table" *ngIf="products.length === 0">
+    <p>No products found. Click "Add Product" to get started.</p>
+  </div>
+</div>
+
+<!-- Skeleton Loading -->
+<div class="skeleton" style="height:300px;border-radius:var(--radius-xl);" *ngIf="loading"></div>
+
+<!-- Product Form Modal -->
+<div class="modal-overlay" *ngIf="showForm" (click)="showForm = false">
+  <div class="modal glass-card" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>{{ editingId ? 'Edit Product' : 'Add New Product' }}</h2>
+      <button class="modal-close" (click)="showForm = false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Product Name *</label>
+        <input type="text" formControlName="name" placeholder="S.O Series 4 KW Inverter" />
+        <span class="error-msg" *ngIf="f['name'].invalid && f['name'].touched">Name is required</span>
+      </div>
+      <div class="form-group">
+        <label>Category *</label>
+        <select formControlName="category">
+          <option *ngFor="let cat of categories" [value]="cat.value">{{ cat.label }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Short Description *</label>
+        <input type="text" formControlName="shortDescription" placeholder="Brief description..." />
+      </div>
+      <div class="form-group">
+        <label>Full Description (HTML)</label>
+        <textarea formControlName="description" rows="4" placeholder="<p>Full product description...</p>"></textarea>
+      </div>
+      <div class="form-row-3">
+        <div class="form-group">
+          <label>Display Order</label>
+          <input type="number" formControlName="displayOrder" />
+        </div>
+        <div class="form-group checkbox-group">
+          <label>
+            <input type="checkbox" formControlName="isFeatured" />
+            Featured Product
+          </label>
+        </div>
+        <div class="form-group checkbox-group">
+          <label>
+            <input type="checkbox" formControlName="isActive" />
+            Active
+          </label>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline" (click)="showForm = false">Cancel</button>
+        <button type="submit" class="btn btn-primary" [disabled]="isSaving">
+          {{ isSaving ? 'Saving...' : (editingId ? 'Update Product' : 'Create Product') }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Delete Confirm -->
+<div class="modal-overlay" *ngIf="deleteConfirmId" (click)="deleteConfirmId = null">
+  <div class="modal modal-sm glass-card" (click)="$event.stopPropagation()">
+    <div class="confirm-icon">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+    </div>
+    <h3>Delete Product?</h3>
+    <p>This action cannot be undone.</p>
+    <div class="modal-actions">
+      <button class="btn btn-outline" (click)="deleteConfirmId = null">Cancel</button>
+      <button class="btn" style="background:var(--color-error);color:white;" (click)="deleteProduct()">Delete</button>
+    </div>
+  </div>
+</div>
