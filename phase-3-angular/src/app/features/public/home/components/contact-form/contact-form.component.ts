@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ContactService } from '../../../../../core/services/contact.service';
+import { NotificationService } from '../../../../../core/services/notification.service';
 
 @Component({
   selector: 'app-contact-form',
@@ -14,7 +15,11 @@ export class ContactFormComponent implements OnInit {
   isSuccess = false;
   errorMessage = '';
 
-  constructor(private fb: FormBuilder, private contactService: ContactService) {}
+  constructor(
+    private fb: FormBuilder,
+    private contactService: ContactService,
+    private notificationService: NotificationService
+  ) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -34,6 +39,7 @@ export class ContactFormComponent implements OnInit {
         this.isSuccess = true;
         this.isSubmitting = false;
         this.form.reset();
+        this.notificationService.success('Your message has been sent! We will contact you soon.');
       },
       error: () => {
         this.errorMessage = 'Something went wrong. Please try again.';

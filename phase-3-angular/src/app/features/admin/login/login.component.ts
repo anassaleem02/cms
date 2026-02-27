@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { NotificationService } from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -40,8 +42,9 @@ export class LoginComponent implements OnInit {
       next: () => {
         this.router.navigate(['/admin/dashboard']);
       },
-      error: (err) => {
+      error: () => {
         this.errorMessage = 'Invalid email or password. Please try again.';
+        this.notificationService.error('Invalid email or password. Please try again.');
         this.isLoading = false;
       }
     });

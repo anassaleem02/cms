@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, of, delay, tap } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { AuthResponse, LoginDto, ChangePasswordDto } from '../models/auth.model';
 import { environment } from '../../../environments/environment';
 
@@ -15,28 +16,14 @@ export class AuthService {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
     if (token && user) {
-      this._isLoggedIn.next(true);
-      this._user.next(JSON.parse(user));
+      try {
+        this._isLoggedIn.next(true);
+        this._user.next(JSON.parse(user));
+      } catch { this.logout(); }
     }
   }
 
   login(dto: LoginDto): Observable<AuthResponse> {
-    // Mock login for development
-    if (dto.email === 'admin@fmspower.com' && dto.password === 'admin123') {
-      const mockResponse: AuthResponse = {
-        token: 'mock-jwt-token-' + Date.now(),
-        email: dto.email,
-        fullName: "FM's Power Admin",
-        role: 'Admin',
-        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
-      };
-      localStorage.setItem('token', mockResponse.token);
-      localStorage.setItem('user', JSON.stringify(mockResponse));
-      this._isLoggedIn.next(true);
-      this._user.next(mockResponse);
-      return of(mockResponse).pipe(delay(500));
-    }
-    // Real API call when backend is available
     return this.http.post<AuthResponse>(`${environment.apiUrl}/auth/login`, dto).pipe(
       tap(res => {
         localStorage.setItem('token', res.token);

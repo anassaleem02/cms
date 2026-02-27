@@ -25,7 +25,7 @@ export class AdminServicesComponent implements OnInit {
 
   load(): void {
     this.loading = true;
-    this.service.getAll(false).subscribe(data => { this.items = data; this.loading = false; });
+    this.service.getAll().subscribe(data => { this.items = data; this.loading = false; });
   }
 
   openCreate(): void {

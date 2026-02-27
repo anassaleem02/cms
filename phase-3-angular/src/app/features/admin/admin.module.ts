@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { SharedModule } from '../../shared/shared.module';
 
 import { AuthGuard } from '../../core/guards/auth.guard';
 import { AdminLayoutComponent } from '../../layout/admin-layout/admin-layout.component';
@@ -55,7 +56,8 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ]
 })
 export class AdminModule {}

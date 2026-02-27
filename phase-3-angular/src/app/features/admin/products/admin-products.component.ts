@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Product, ProductCategory, CreateProductDto } from '../../../core/models/product.model';
 import { ProductService } from '../../../core/services/product.service';
+import { NotificationService } from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-admin-products',
@@ -26,15 +27,25 @@ export class AdminProductsComponent implements OnInit {
     { label: 'Accessory', value: ProductCategory.Accessory }
   ];
 
-  constructor(private productService: ProductService, private fb: FormBuilder) {}
+  constructor(
+    private productService: ProductService,
+    private fb: FormBuilder,
+    private notificationService: NotificationService
+  ) {}
 
   ngOnInit(): void { this.loadProducts(); }
 
   loadProducts(): void {
     this.loading = true;
-    this.productService.getAllAdmin().subscribe(p => {
-      this.products = p;
-      this.loading = false;
+    this.productService.getAllAdmin().subscribe({
+      next: (p) => {
+        this.products = p;
+        this.loading = false;
+      },
+      error: () => {
+        this.notificationService.error('Failed to load products.');
+        this.loading = false;
+      }
     });
   }
 
@@ -73,10 +84,17 @@ export class AdminProductsComponent implements OnInit {
     const obs = this.editingId
       ? this.productService.update(this.editingId, dto)
       : this.productService.create(dto);
-    obs.subscribe(() => {
-      this.isSaving = false;
-      this.showForm = false;
-      this.loadProducts();
+    obs.subscribe({
+      next: () => {
+        this.isSaving = false;
+        this.showForm = false;
+        this.notificationService.success(this.editingId ? 'Product updated successfully.' : 'Product created successfully.');
+        this.loadProducts();
+      },
+      error: () => {
+        this.notificationService.error(this.editingId ? 'Failed to update product.' : 'Failed to create product.');
+        this.isSaving = false;
+      }
     });
   }
 
@@ -84,9 +102,16 @@ export class AdminProductsComponent implements OnInit {
 
   deleteProduct(): void {
     if (!this.deleteConfirmId) return;
-    this.productService.delete(this.deleteConfirmId).subscribe(() => {
-      this.deleteConfirmId = null;
-      this.loadProducts();
+    this.productService.delete(this.deleteConfirmId).subscribe({
+      next: () => {
+        this.notificationService.success('Product deleted successfully.');
+        this.deleteConfirmId = null;
+        this.loadProducts();
+      },
+      error: () => {
+        this.notificationService.error('Failed to delete product.');
+        this.deleteConfirmId = null;
+      }
     });
   }
 

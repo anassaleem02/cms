@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { SharedModule } from '../../shared/shared.module';
 
 import { PublicLayoutComponent } from '../../layout/public-layout/public-layout.component';
 import { HeaderComponent } from '../../layout/header/header.component';
@@ -57,7 +58,8 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ]
 })
 export class PublicModule {}

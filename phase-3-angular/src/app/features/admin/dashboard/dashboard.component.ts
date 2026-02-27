@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from '../../../core/services/product.service';
-import { TestimonialService } from '../../../core/services/testimonial.service';
-import { ContactService } from '../../../core/services/contact.service';
-import { FeatureService } from '../../../core/services/feature.service';
-import { forkJoin } from 'rxjs';
+import { DashboardService } from '../../../core/services/dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,26 +24,21 @@ export class DashboardComponent implements OnInit {
     { label: 'Site Settings', url: '/admin/settings', icon: 'settings', color: 'purple' }
   ];
 
-  constructor(
-    private productService: ProductService,
-    private testimonialService: TestimonialService,
-    private contactService: ContactService,
-    private featureService: FeatureService
-  ) {}
+  constructor(private dashboardService: DashboardService) {}
 
   ngOnInit(): void {
-    forkJoin({
-      products: this.productService.getAllAdmin(),
-      testimonials: this.testimonialService.getAll(false),
-      messages: this.contactService.getAll(),
-      features: this.featureService.getAll(false)
-    }).subscribe(data => {
-      this.stats.products = data.products.length;
-      this.stats.testimonials = data.testimonials.length;
-      this.stats.messages = data.messages.length;
-      this.stats.unreadMessages = data.messages.filter(m => !m.isRead).length;
-      this.stats.features = data.features.length;
-      this.loading = false;
+    this.dashboardService.getAnalytics().subscribe({
+      next: (data) => {
+        this.stats.products = data.totalProducts;
+        this.stats.testimonials = data.totalTestimonials;
+        this.stats.messages = data.totalMessages;
+        this.stats.unreadMessages = data.unreadMessages;
+        this.stats.features = data.totalFeatures;
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+      }
     });
   }
 }
