@@ -13,7 +13,6 @@ public class SettingsController : ControllerBase
     public SettingsController(ISiteSettingsService settingsService) { _settingsService = settingsService; }
 
     [HttpGet]
-    [ResponseCache(Duration = 60)]
     public async Task<IActionResult> Get() => Ok(await _settingsService.GetAsync());
 
     [HttpPut]

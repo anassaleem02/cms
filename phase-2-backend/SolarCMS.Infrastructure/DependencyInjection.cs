@@ -24,6 +24,8 @@ public static class DependencyInjection
         services.AddScoped<INavigationService, NavigationService>();
         services.AddScoped<ISiteSettingsService, SiteSettingsService>();
         services.AddScoped<IMediaService, MediaService>();
+        services.AddScoped<IVideoReviewService, VideoReviewService>();
+        services.AddScoped<IFaqService, FaqService>();
 
         return services;
     }

@@ -20,6 +20,8 @@ public class AppDbContext : DbContext
     public DbSet<NavigationItem> NavigationItems => Set<NavigationItem>();
     public DbSet<SiteSettings> SiteSettings => Set<SiteSettings>();
     public DbSet<MediaFile> MediaFiles => Set<MediaFile>();
+    public DbSet<VideoReview> VideoReviews => Set<VideoReview>();
+    public DbSet<Faq> Faqs => Set<Faq>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

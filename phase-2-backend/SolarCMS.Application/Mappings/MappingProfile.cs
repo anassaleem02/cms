@@ -8,6 +8,8 @@ using SolarCMS.Application.DTOs.Products;
 using SolarCMS.Application.DTOs.Services;
 using SolarCMS.Application.DTOs.Settings;
 using SolarCMS.Application.DTOs.Testimonials;
+using SolarCMS.Application.DTOs.VideoReviews;
+using SolarCMS.Application.DTOs.Faqs;
 using SolarCMS.Domain.Entities;
 
 namespace SolarCMS.Application.Mappings;
@@ -123,5 +125,27 @@ public class MappingProfile : Profile
 
         // Media
         CreateMap<MediaFile, MediaFileDto>();
+
+        // VideoReview
+        CreateMap<VideoReview, VideoReviewDto>();
+        CreateMap<CreateVideoReviewDto, VideoReview>()
+            .ForMember(d => d.Id, opt => opt.Ignore())
+            .ForMember(d => d.CreatedAt, opt => opt.Ignore())
+            .ForMember(d => d.UpdatedAt, opt => opt.Ignore());
+        CreateMap<UpdateVideoReviewDto, VideoReview>()
+            .ForMember(d => d.Id, opt => opt.Ignore())
+            .ForMember(d => d.CreatedAt, opt => opt.Ignore())
+            .ForMember(d => d.UpdatedAt, opt => opt.Ignore());
+
+        // Faq
+        CreateMap<Faq, FaqDto>();
+        CreateMap<CreateFaqDto, Faq>()
+            .ForMember(d => d.Id, opt => opt.Ignore())
+            .ForMember(d => d.CreatedAt, opt => opt.Ignore())
+            .ForMember(d => d.UpdatedAt, opt => opt.Ignore());
+        CreateMap<UpdateFaqDto, Faq>()
+            .ForMember(d => d.Id, opt => opt.Ignore())
+            .ForMember(d => d.CreatedAt, opt => opt.Ignore())
+            .ForMember(d => d.UpdatedAt, opt => opt.Ignore());
     }
 }

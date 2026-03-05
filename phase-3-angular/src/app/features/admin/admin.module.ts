@@ -19,6 +19,8 @@ import { AdminContactMessagesComponent } from './contact-messages/admin-contact-
 import { AdminSettingsComponent } from './settings/admin-settings.component';
 import { AdminNavigationComponent } from './navigation/admin-navigation.component';
 import { AdminMediaComponent } from './media/admin-media.component';
+import { AdminVideoReviewsComponent } from './video-reviews/admin-video-reviews.component';
+import { AdminFaqsComponent } from './faqs/admin-faqs.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -38,7 +40,9 @@ const routes: Routes = [
       { path: 'contact-messages', component: AdminContactMessagesComponent },
       { path: 'settings', component: AdminSettingsComponent },
       { path: 'navigation', component: AdminNavigationComponent },
-      { path: 'media', component: AdminMediaComponent }
+      { path: 'media', component: AdminMediaComponent },
+      { path: 'video-reviews', component: AdminVideoReviewsComponent },
+      { path: 'faqs', component: AdminFaqsComponent }
     ]
   }
 ];
@@ -56,7 +60,9 @@ const routes: Routes = [
     AdminContactMessagesComponent,
     AdminSettingsComponent,
     AdminNavigationComponent,
-    AdminMediaComponent
+    AdminMediaComponent,
+    AdminVideoReviewsComponent,
+    AdminFaqsComponent
   ],
   imports: [
     CommonModule,

@@ -12,7 +12,7 @@
       <p>See our products in action. Real installations, real results from our customers.</p>
     </div>
 
-    <div class="videos-grid">
+    <div class="videos-grid" *ngIf="!loading">
       <div class="video-card glass-card" *ngFor="let video of videos">
         <div class="video-wrapper">
           <div class="video-badge">
@@ -22,7 +22,7 @@
             Review
           </div>
           <iframe
-            [src]="video.embedUrl"
+            [src]="getEmbedUrl(video.youtubeUrl)"
             [title]="video.title"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen>
@@ -33,6 +33,9 @@
           <p>{{ video.description }}</p>
         </div>
       </div>
+    </div>
+    <div class="videos-grid" *ngIf="loading">
+      <div class="skeleton" style="height:320px;border-radius:var(--radius-2xl);" *ngFor="let i of [1,2,3]"></div>
     </div>
   </div>
 </section>

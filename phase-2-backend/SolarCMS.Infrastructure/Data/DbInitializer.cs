@@ -16,15 +16,6 @@ public static class DbInitializer
         // Apply any pending migrations
         await context.Database.MigrateAsync();
 
-        // Patch: ensure LogoUrl is correct regardless of when seed ran
-        var existingSettings = await context.SiteSettings.FirstOrDefaultAsync();
-        if (existingSettings != null && existingSettings.LogoUrl != "/images/logo/fmslogo.png")
-        {
-            existingSettings.LogoUrl = "/images/logo/fmslogo.png";
-            existingSettings.UpdatedAt = DateTime.UtcNow;
-            await context.SaveChangesAsync();
-        }
-
         // Patch: add secondary images to products that only have 1 image
         var productsWithImages = await context.Products.Include(p => p.Images).ToListAsync();
         var secondaryImages = new Dictionary<string, (string url, string alt)>
@@ -76,12 +67,13 @@ public static class DbInitializer
             SiteName = "FM's Power",
             TagLine = "Premium Solar Energy Solutions",
             LogoUrl = "/images/logo/fmslogo.png",
-            FaviconUrl = "/images/logo/favicon.ico",
+            FaviconUrl = "/favicon.svg",
             Phone = "0322-2550299",
             Email = "thefmstrading@gmail.com",
             WhatsApp = "+923222550299",
             Address = "Shop G31-G50, Ground Floor, Al-Najeebi Electronic Bazar, Agha Khan Road 3, Near Star City Mall, Saddar, Karachi",
             BusinessHours = "Mon-Sat: 9:00 AM - 8:00 PM, Sun: Closed",
+            MapEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3619.855!2d67.0151!3d24.8569!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33e06651d4bbf%3A0x9cf92a51568c11f2!2sSaddar%2C%20Karachi!5e0!3m2!1sen!2spk!4v1234567890!5m2!1sen!2spk",
             MetaTitle = "FM's Power - Premium Solar Inverters, Batteries & Panels in Karachi",
             MetaDescription = "Buy premium solar inverters, lithium batteries and solar panels in Karachi. FM's Power offers S.O Series products with 5-year warranty and expert installation.",
             CreatedAt = DateTime.UtcNow,
@@ -349,6 +341,26 @@ public static class DbInitializer
             }
         };
         context.Products.AddRange(products);
+
+        // ─── Video Reviews ────────────────────────────────────────
+        var videoReviews = new[]
+        {
+            new VideoReview { Title = "S.O Series 6.2KW Installation Review", Description = "Customer testimonial showcasing the complete installation process and performance of our 6.2KW solar inverter system.", YoutubeUrl = "https://www.youtube.com/embed/J8uTru18c3k", IsActive = true, DisplayOrder = 0, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
+            new VideoReview { Title = "Lithium Battery 51.2V 280Ah Review", Description = "In-depth review of our high-capacity lithium battery system featuring intelligent BMS and exceptional performance.", YoutubeUrl = "https://www.youtube.com/embed/J8uTru18c3k", IsActive = true, DisplayOrder = 1, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
+            new VideoReview { Title = "Complete Solar Solution Installation", Description = "Full walkthrough of a complete solar installation including inverter, batteries, and solar panels working together.", YoutubeUrl = "https://www.youtube.com/embed/WxI_sdts9ZY", IsActive = true, DisplayOrder = 2, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow }
+        };
+        context.VideoReviews.AddRange(videoReviews);
+
+        // ─── FAQs ─────────────────────────────────────────────────
+        var faqs = new[]
+        {
+            new Faq { Question = "What areas do you serve?", Answer = "We serve all areas of Karachi and surrounding regions including DHA, Clifton, Gulshan-e-Iqbal, SITE, Saddar, North Nazimabad, and more.", IsActive = true, DisplayOrder = 0, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
+            new Faq { Question = "How long does installation take?", Answer = "A standard residential installation typically takes 1-2 days. Commercial installations may take longer depending on system size.", IsActive = true, DisplayOrder = 1, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
+            new Faq { Question = "What warranty do you offer?", Answer = "All our products come with a 5-year manufacturer warranty covering inverters, lithium batteries, and solar panels. We also provide after-sales support throughout the warranty period.", IsActive = true, DisplayOrder = 2, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
+            new Faq { Question = "Do you offer financing?", Answer = "Yes, we offer flexible payment plans to make solar energy accessible. Contact us for details on our installment options and financing partners.", IsActive = true, DisplayOrder = 3, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
+            new Faq { Question = "How do I maintain my solar system?", Answer = "Our team provides regular maintenance services. Annual checkups are recommended to ensure optimal performance. We also offer remote monitoring so issues can be identified and resolved quickly.", IsActive = true, DisplayOrder = 4, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow }
+        };
+        context.Faqs.AddRange(faqs);
 
         await context.SaveChangesAsync();
     }

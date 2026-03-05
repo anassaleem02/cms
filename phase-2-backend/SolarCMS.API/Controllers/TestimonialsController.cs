@@ -13,7 +13,6 @@ public class TestimonialsController : ControllerBase
     public TestimonialsController(ITestimonialService testimonialService) { _testimonialService = testimonialService; }
 
     [HttpGet]
-    [ResponseCache(Duration = 60)]
     public async Task<IActionResult> GetAll([FromQuery] bool activeOnly = true)
         => Ok(await _testimonialService.GetAllAsync(activeOnly));
 

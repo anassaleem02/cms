@@ -14,7 +14,6 @@ public class HeroController : ControllerBase
 
     /// <summary>Get active hero section</summary>
     [HttpGet("active")]
-    [ResponseCache(Duration = 60)]
     public async Task<IActionResult> GetActive()
     {
         var hero = await _heroService.GetActiveAsync();

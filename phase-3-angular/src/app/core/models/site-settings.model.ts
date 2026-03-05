@@ -15,6 +15,7 @@ export interface SiteSettings {
   metaTitle?: string;
   metaDescription?: string;
   businessHours: string;
+  mapEmbedUrl?: string;
 }
 
 export type UpdateSiteSettingsDto = Omit<SiteSettings, 'id'>;

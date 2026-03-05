@@ -19,4 +19,5 @@ public class SiteSettings : BaseEntity
     public string? MetaTitle { get; set; }
     public string? MetaDescription { get; set; }
     public string BusinessHours { get; set; } = string.Empty;
+    public string? MapEmbedUrl { get; set; }
 }

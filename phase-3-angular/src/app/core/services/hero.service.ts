@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { Hero, CreateHeroDto, UpdateHeroDto } from '../models/hero.model';
 import { environment } from '../../../environments/environment';
-import { MOCK_HERO } from '../mock-data';
 
 @Injectable({ providedIn: 'root' })
 export class HeroService {
@@ -12,13 +10,13 @@ export class HeroService {
   constructor(private http: HttpClient) {}
 
   getActive(): Observable<Hero> {
-    return this.http.get<Hero>(`${this.base}/active`).pipe(catchError(() => of(MOCK_HERO)));
+    return this.http.get<Hero>(`${this.base}/active`);
   }
   get(id: number): Observable<Hero> {
-    return this.http.get<Hero>(`${this.base}/${id}`).pipe(catchError(() => of(MOCK_HERO)));
+    return this.http.get<Hero>(`${this.base}/${id}`);
   }
   getAll(): Observable<Hero[]> {
-    return this.http.get<Hero[]>(this.base).pipe(catchError(() => of([MOCK_HERO])));
+    return this.http.get<Hero[]>(this.base);
   }
   create(dto: CreateHeroDto): Observable<Hero> { return this.http.post<Hero>(this.base, dto); }
   update(id: number, dto: UpdateHeroDto): Observable<Hero> { return this.http.put<Hero>(`${this.base}/${id}`, dto); }

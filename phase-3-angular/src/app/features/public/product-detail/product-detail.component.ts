@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Product, ProductImage } from '../../../core/models/product.model';
@@ -21,7 +21,18 @@ export class ProductDetailComponent implements OnInit {
   inquiryForm!: FormGroup;
   submittingInquiry = false;
   inquirySuccess = false;
+
+  // Lightbox
   zoomOpen = false;
+  currentImageIndex = 0;
+
+  // Hover zoom
+  isHoverZoom = false;
+  zoomOriginX = 50;
+  zoomOriginY = 50;
+
+  // Touch swipe
+  private touchStartX = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -51,6 +62,7 @@ export class ProductDetailComponent implements OnInit {
         }
         this.product = product;
         this.selectedImage = product.primaryImage || product.images[0] || null;
+        this.currentImageIndex = 0;
         this.loading = false;
         this.seoService.setProductPage(product);
         this.productService.getRelated(product.id).subscribe(related => {
@@ -62,13 +74,52 @@ export class ProductDetailComponent implements OnInit {
 
   selectImage(image: ProductImage): void {
     this.selectedImage = image;
+    this.currentImageIndex = this.product?.images.indexOf(image) ?? 0;
+    this.isHoverZoom = false;
   }
 
+  // Lightbox
   openZoom(): void { if (this.selectedImage) this.zoomOpen = true; }
   closeZoom(): void { this.zoomOpen = false; }
 
-  @HostListener('document:keydown.escape')
-  onEsc(): void { this.zoomOpen = false; }
+  get totalImages(): number { return this.product?.images?.length ?? 0; }
+
+  prevImage(): void {
+    if (!this.product?.images.length) return;
+    this.currentImageIndex = (this.currentImageIndex - 1 + this.totalImages) % this.totalImages;
+    this.selectedImage = this.product.images[this.currentImageIndex];
+  }
+
+  nextImage(): void {
+    if (!this.product?.images.length) return;
+    this.currentImageIndex = (this.currentImageIndex + 1) % this.totalImages;
+    this.selectedImage = this.product.images[this.currentImageIndex];
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  onKeyDown(e: KeyboardEvent): void {
+    if (!this.zoomOpen) return;
+    if (e.key === 'Escape') this.closeZoom();
+    if (e.key === 'ArrowLeft') this.prevImage();
+    if (e.key === 'ArrowRight') this.nextImage();
+  }
+
+  // Hover zoom
+  onImageMouseEnter(): void { this.isHoverZoom = true; }
+  onImageMouseLeave(): void { this.isHoverZoom = false; }
+  onImageMouseMove(event: MouseEvent): void {
+    const target = event.currentTarget as HTMLElement;
+    const rect = target.getBoundingClientRect();
+    this.zoomOriginX = ((event.clientX - rect.left) / rect.width) * 100;
+    this.zoomOriginY = ((event.clientY - rect.top) / rect.height) * 100;
+  }
+
+  // Touch swipe for lightbox
+  onLightboxTouchStart(e: TouchEvent): void { this.touchStartX = e.touches[0].clientX; }
+  onLightboxTouchEnd(e: TouchEvent): void {
+    const diff = this.touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) { diff > 0 ? this.nextImage() : this.prevImage(); }
+  }
 
   getCategoryLabel(): string {
     if (!this.product) return '';

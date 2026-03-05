@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn,
 import { SettingsService } from '../../../core/services/settings.service';
 import { MediaService } from '../../../core/services/media.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { NotificationService } from '../../../core/services/notification.service';
 import { SiteSettings } from '../../../core/models/site-settings.model';
 
 function passwordMatchValidator(): ValidatorFn {
@@ -42,13 +43,14 @@ export class AdminSettingsComponent implements OnInit {
     private service: SettingsService,
     private mediaService: MediaService,
     private authService: AuthService,
+    private notification: NotificationService,
     private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
-    this.service.get().subscribe(settings => {
-      this.buildForm(settings);
-      this.loading = false;
+    this.service.get().subscribe({
+      next: settings => { this.buildForm(settings); this.loading = false; },
+      error: () => { this.buildForm({} as SiteSettings); this.loading = false; }
     });
 
     this.pwForm = this.fb.group({
@@ -74,25 +76,31 @@ export class AdminSettingsComponent implements OnInit {
       youtubeUrl: [s.youtubeUrl],
       googleAnalyticsId: [s.googleAnalyticsId],
       metaTitle: [s.metaTitle],
-      metaDescription: [s.metaDescription]
+      metaDescription: [s.metaDescription],
+      mapEmbedUrl: [s.mapEmbedUrl]
     });
   }
 
   onSubmit(): void {
-    if (this.form.invalid || this.isSaving) return;
+    if (this.isSaving) return;
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      this.notification.error('Please fill in all required fields correctly.');
+      return;
+    }
     this.isSaving = true;
     this.service.update(this.form.value).subscribe({
       next: (saved) => {
         this.isSaving = false;
         this.saveSuccess = true;
-        // Update browser favicon dynamically
+        this.notification.success('Settings saved successfully!');
         if (saved?.faviconUrl) {
           const link = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
           if (link) link.href = saved.faviconUrl;
         }
         setTimeout(() => this.saveSuccess = false, 3000);
       },
-      error: () => { this.isSaving = false; }
+      error: () => { this.isSaving = false; this.notification.error('Failed to save settings.'); }
     });
   }
 

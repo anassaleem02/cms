@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { Feature, CreateFeatureDto, UpdateFeatureDto } from '../models/feature.model';
 import { environment } from '../../../environments/environment';
-import { MOCK_FEATURES } from '../mock-data';
 
 @Injectable({ providedIn: 'root' })
 export class FeatureService {
@@ -12,12 +10,10 @@ export class FeatureService {
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<Feature[]> {
-    return this.http.get<Feature[]>(this.base).pipe(catchError(() => of(MOCK_FEATURES)));
+    return this.http.get<Feature[]>(this.base);
   }
   getById(id: number): Observable<Feature> {
-    return this.http.get<Feature>(`${this.base}/${id}`).pipe(
-      catchError(() => of(MOCK_FEATURES.find(f => f.id === id) || MOCK_FEATURES[0]))
-    );
+    return this.http.get<Feature>(`${this.base}/${id}`);
   }
   create(dto: CreateFeatureDto): Observable<Feature> { return this.http.post<Feature>(this.base, dto); }
   update(id: number, dto: UpdateFeatureDto): Observable<Feature> { return this.http.put<Feature>(`${this.base}/${id}`, dto); }
