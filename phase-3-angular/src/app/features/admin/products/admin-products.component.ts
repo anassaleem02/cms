@@ -70,6 +70,12 @@ export class AdminProductsComponent implements OnInit {
   editSpecKey = '';
   editSpecValue = '';
 
+  // Pending specs (for new product before creation)
+  pendingSpecs: Array<{key: string, value: string, displayOrder: number}> = [];
+
+  // Badge presets
+  badgePresets = ['Best Seller', 'New', 'Popular', 'Limited', 'Sale'];
+
   constructor(
     private productService: ProductService,
     private notificationService: NotificationService,
@@ -110,6 +116,7 @@ export class AdminProductsComponent implements OnInit {
     this.productImages = [];
     this.productSpecs = [];
     this.pendingImages = []; this.pendingImageUrl = ''; this.pendingImageAlt = '';
+    this.pendingSpecs = [];
     this.newSpecKey = ''; this.newSpecValue = ''; this.editingSpecId = null;
     this.showForm = true;
   }
@@ -126,7 +133,7 @@ export class AdminProductsComponent implements OnInit {
     this.showForm = true;
   }
 
-  closeForm(): void { this.showForm = false; this.editingProduct = null; this.productImages = []; this.productSpecs = []; this.pendingImages = []; }
+  closeForm(): void { this.showForm = false; this.editingProduct = null; this.productImages = []; this.productSpecs = []; this.pendingImages = []; this.pendingSpecs = []; }
 
   saveProduct(): void {
     if (!this.form.name.trim()) { this.notificationService.error('Product name is required.'); return; }
@@ -147,9 +154,14 @@ export class AdminProductsComponent implements OnInit {
           this.editingProduct = saved;
           this.productImages = [];
           this.productSpecs = [];
+          const hasPending = this.pendingImages.length > 0 || this.pendingSpecs.length > 0;
+          if (this.pendingSpecs.length > 0) {
+            this.uploadPendingSpecs(saved.id);
+          }
           if (this.pendingImages.length > 0) {
             this.uploadPendingImages(saved.id);
-          } else {
+          }
+          if (!hasPending) {
             this.notificationService.success('Product created! You can now add images and specifications.');
           }
         }
@@ -366,6 +378,55 @@ export class AdminProductsComponent implements OnInit {
       },
       error: () => this.notificationService.error('Failed to remove image.')
     });
+  }
+
+  // --- Pending specs (for new product) ---
+  addPendingSpec(): void {
+    if (!this.newSpecKey.trim() || !this.newSpecValue.trim()) return;
+    this.pendingSpecs.push({ key: this.newSpecKey.trim(), value: this.newSpecValue.trim(), displayOrder: this.pendingSpecs.length });
+    this.newSpecKey = ''; this.newSpecValue = '';
+  }
+
+  removePendingSpec(index: number): void { this.pendingSpecs.splice(index, 1); }
+
+  uploadPendingSpecs(productId: number): void {
+    const specs = [...this.pendingSpecs];
+    this.pendingSpecs = [];
+    let completed = 0;
+    specs.forEach(spec => {
+      this.productService.addSpec(productId, spec).subscribe({
+        next: (s) => {
+          this.productSpecs.push(s);
+          completed++;
+          if (completed === specs.length) {
+            this.notificationService.success(`${specs.length} spec${specs.length !== 1 ? 's' : ''} added.`);
+            this.loadProducts();
+          }
+        },
+        error: () => { completed++; }
+      });
+    });
+  }
+
+  // Badge preset toggle (multi-select, comma-separated)
+  toggleBadge(preset: string): void {
+    const badges = this.getActiveBadges();
+    const index = badges.indexOf(preset);
+    if (index > -1) {
+      badges.splice(index, 1);
+    } else {
+      badges.push(preset);
+    }
+    this.form.badgeLabel = badges.join(', ');
+  }
+
+  isBadgeActive(preset: string): boolean {
+    return this.getActiveBadges().includes(preset);
+  }
+
+  private getActiveBadges(): string[] {
+    if (!this.form.badgeLabel) return [];
+    return this.form.badgeLabel.split(',').map(b => b.trim()).filter(b => b);
   }
 
   // --- Specification management ---

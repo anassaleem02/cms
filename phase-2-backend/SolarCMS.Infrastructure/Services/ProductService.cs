@@ -173,6 +173,20 @@ public class ProductService : IProductService
         return _mapper.Map<ProductSpecificationDto>(spec);
     }
 
+    public async Task<ProductSpecificationDto> UpdateSpecificationAsync(int specId, AddSpecificationDto dto)
+    {
+        var spec = await _db.ProductSpecifications.FindAsync(specId)
+            ?? throw new NotFoundException(nameof(ProductSpecification), specId);
+
+        spec.Key = dto.Key;
+        spec.Value = dto.Value;
+        spec.DisplayOrder = dto.DisplayOrder;
+        spec.UpdatedAt = DateTime.UtcNow;
+
+        await _db.SaveChangesAsync();
+        return _mapper.Map<ProductSpecificationDto>(spec);
+    }
+
     public async Task DeleteSpecificationAsync(int specId)
     {
         var spec = await _db.ProductSpecifications.FindAsync(specId)

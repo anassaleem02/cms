@@ -17,6 +17,7 @@ public interface IProductService
     Task DeleteImageAsync(int imageId);
     Task SetPrimaryImageAsync(int productId, int imageId);
     Task<ProductSpecificationDto> AddSpecificationAsync(int productId, AddSpecificationDto dto);
+    Task<ProductSpecificationDto> UpdateSpecificationAsync(int specId, AddSpecificationDto dto);
     Task DeleteSpecificationAsync(int specId);
     Task ReorderAsync(List<int> orderedIds);
 }

@@ -27,7 +27,9 @@
 
         <!-- Image with overlaid badges -->
         <div class="product-image">
-          <span class="badge-featured" *ngIf="product.badgeLabel">{{ product.badgeLabel }}</span>
+          <div class="badges-left" *ngIf="getBadges(product).length">
+            <span class="badge-featured" *ngFor="let badge of getBadges(product)">{{ badge }}</span>
+          </div>
           <span class="badge-category">{{ getCategoryLabel(product.category) }}</span>
           <img
             *ngIf="product.primaryImage"

@@ -360,11 +360,77 @@
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
+// Badge pills
+.badge-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.badge-pill {
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border-secondary);
+  background: var(--glass-bg);
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+
+  &:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: rgba(22, 119, 255, 0.05);
+  }
+
+  &.active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #fff;
+  }
+}
+
+// Spec presets
+.spec-presets {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  border-top: 1px solid var(--border-primary);
+}
+
+.spec-presets-label {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-right: 2px;
+}
+
+.spec-preset-btn {
+  padding: 2px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--border-primary);
+  background: var(--bg-tertiary);
+  color: var(--text-tertiary);
+  font-size: 0.6875rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+
+  &:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: rgba(22, 119, 255, 0.08);
+  }
+}
+
 // Specifications section
 .specs-section {
   border: 1px solid var(--border-primary);
   border-radius: 12px;
-  overflow: hidden;
   margin-top: 4px;
 }
 
@@ -426,6 +492,23 @@
   flex: 1;
   min-width: 0;
   &:focus { border-color: var(--color-primary); }
+}
+
+.spec-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 8px 12px;
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  background: rgba(22, 119, 255, 0.04);
+  border-top: 1px solid var(--border-primary);
+  line-height: 1.5;
+
+  svg { flex-shrink: 0; margin-top: 2px; color: var(--color-primary); }
+  span { min-width: 0; }
+  strong { color: var(--text-secondary); }
+  code { display: inline-block; margin-top: 2px; background: var(--bg-tertiary); padding: 2px 8px; border-radius: 4px; font-size: 0.6875rem; color: var(--color-primary); white-space: nowrap; }
 }
 
 .add-spec-row {

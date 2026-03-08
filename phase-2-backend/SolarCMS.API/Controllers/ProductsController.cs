@@ -120,6 +120,15 @@ public class ProductsController : ControllerBase
         return Ok(spec);
     }
 
+    /// <summary>Update specification (Admin only)</summary>
+    [HttpPut("specifications/{specId:int}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> UpdateSpecification(int specId, [FromBody] AddSpecificationDto dto)
+    {
+        var spec = await _productService.UpdateSpecificationAsync(specId, dto);
+        return Ok(spec);
+    }
+
     /// <summary>Delete specification (Admin only)</summary>
     [HttpDelete("specifications/{specId:int}")]
     [Authorize(Roles = "Admin")]

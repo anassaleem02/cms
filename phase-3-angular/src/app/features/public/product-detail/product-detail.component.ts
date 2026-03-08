@@ -128,7 +128,17 @@ export class ProductDetailComponent implements OnInit {
   }
 
   get quickSpecs() {
-    return this.product?.specifications?.slice(0, 3) ?? [];
+    return this.product?.specifications?.filter(s => s.key.toLowerCase() !== 'warranty').slice(0, 3) ?? [];
+  }
+
+  get warrantySpec() {
+    const spec = this.product?.specifications?.find(s => s.key.toLowerCase() === 'warranty');
+    if (!spec) return null;
+    const parts = spec.value.split('|').map(p => p.trim());
+    return {
+      title: parts[0],
+      description: parts[1] || null
+    };
   }
 
   submitInquiry(): void {

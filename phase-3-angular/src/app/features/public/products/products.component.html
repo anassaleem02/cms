@@ -35,9 +35,9 @@
     <div class="grid-3" *ngIf="!loading">
       <div class="product-card glass-card" *ngFor="let product of filteredProducts">
         <div class="product-image">
-          <!-- Featured/special badge on LEFT (gold) -->
-          <span class="badge-featured" *ngIf="product.badgeLabel">{{ product.badgeLabel }}</span>
-          <!-- Category badge on RIGHT (glass) -->
+          <div class="badges-left" *ngIf="getBadges(product).length">
+            <span class="badge-featured" *ngFor="let badge of getBadges(product)">{{ badge }}</span>
+          </div>
           <span class="badge-category">{{ getCategoryLabel(product.category) }}</span>
           <img
             *ngIf="product.primaryImage"

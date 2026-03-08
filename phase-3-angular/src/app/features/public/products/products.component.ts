@@ -51,6 +51,11 @@ export class ProductsPageComponent implements OnInit {
     return this.allProducts.filter(p => p.category === value).length;
   }
 
+  getBadges(product: Product): string[] {
+    if (!product.badgeLabel) return [];
+    return product.badgeLabel.split(',').map(b => b.trim()).filter(b => b);
+  }
+
   getCategoryLabel(category: ProductCategory): string {
     const map: Record<number, string> = {
       [ProductCategory.Inverter]: 'Inverter',

@@ -21,6 +21,11 @@ export class ProductsShowcaseComponent implements OnInit {
     });
   }
 
+  getBadges(product: Product): string[] {
+    if (!product.badgeLabel) return [];
+    return product.badgeLabel.split(',').map(b => b.trim()).filter(b => b);
+  }
+
   getCategoryLabel(category: ProductCategory): string {
     const labels: Record<number, string> = {
       [ProductCategory.Inverter]: 'Inverter',
